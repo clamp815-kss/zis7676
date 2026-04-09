@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content, shrink-to-fit=no" />
   <title>Tetris Palace</title>
   <style>
 
@@ -39,6 +39,9 @@
       overflow: hidden;
       color: var(--text);
       font-family: Consolas, Monaco, "Segoe UI", sans-serif;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
       background:
         radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.56), transparent 18%),
         radial-gradient(circle at 18% 22%, rgba(255, 213, 231, 0.34), transparent 20%),
@@ -410,8 +413,8 @@
     .player-card {
       position: relative;
       flex: 1 1 0;
-      max-width: 648px;
-      min-width: 520px;
+      max-width: 560px;
+      min-width: 460px;
       background: linear-gradient(180deg, rgba(8, 15, 43, 0.84), rgba(7, 9, 24, 0.86));
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
@@ -474,10 +477,9 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, var(--board-width)) minmax(232px, 268px);
-      gap: 20px;
+      grid-template-columns: minmax(0, var(--board-width)) minmax(220px, 1fr);
+      gap: 18px;
       align-items: start;
-      justify-content: center;
     }
 
     .board-frame {
@@ -542,9 +544,6 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      min-width: 232px;
-      width: min(100%, 268px);
-      justify-self: center;
     }
 
     .stats-grid {
@@ -904,42 +903,42 @@
     }
 
     body.layout-phone .mobile-controls {
-      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      padding: 18px 14px calc(18px + env(safe-area-inset-bottom));
     }
 
     body.layout-phone .mobile-controls-inner {
-      gap: 8px;
+      gap: 14px;
     }
 
     body.layout-phone .touch-strip {
-      padding: 10px;
-      border-radius: 20px;
+      padding: 18px;
+      border-radius: 28px;
     }
 
     body.layout-phone .touch-grid {
-      gap: 8px;
+      gap: 14px;
     }
 
     body.layout-phone .touch-btn {
-      min-height: 72px;
-      border-radius: 18px;
-      font-size: 24px;
+      min-height: 102px;
+      border-radius: 26px;
+      font-size: 32px;
     }
 
     body.layout-phone .touch-btn.utility {
-      min-height: 54px;
-      font-size: 16px;
+      min-height: 76px;
+      font-size: 20px;
     }
 
     @media (max-width: 420px) {
       body.layout-phone .touch-btn {
-        min-height: 64px;
-        font-size: 22px;
+        min-height: 92px;
+        font-size: 29px;
       }
 
       body.layout-phone .touch-btn.utility {
-        min-height: 48px;
-        font-size: 15px;
+        min-height: 68px;
+        font-size: 18px;
       }
     }
 
@@ -952,16 +951,16 @@
       left: auto;
       right: auto;
       bottom: 0;
-      padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
-      background: linear-gradient(180deg, rgba(12, 10, 24, 0), rgba(12, 10, 24, 0.14) 24%, rgba(12, 10, 24, 0.36) 100%);
+      padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(12, 10, 24, 0), rgba(12, 10, 24, 0.18) 24%, rgba(12, 10, 24, 0.46) 100%);
       backdrop-filter: blur(8px);
     }
 
     body.layout-tablet .mobile-controls-inner {
       max-width: 980px;
-      grid-template-columns: minmax(150px, 180px) minmax(0, 1fr);
+      grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
       align-items: start;
-      gap: 8px;
+      gap: 12px;
     }
 
     body.layout-tablet .touch-utility {
@@ -970,21 +969,21 @@
     }
 
     body.layout-tablet .touch-strip {
-      padding: 10px;
+      padding: 14px;
     }
 
     body.layout-tablet .touch-grid {
-      gap: 8px;
+      gap: 10px;
     }
 
     body.layout-tablet .touch-btn {
-      min-height: 50px;
-      font-size: 17px;
+      min-height: 62px;
+      font-size: 20px;
     }
 
     body.layout-tablet .touch-btn.utility {
-      min-height: 44px;
-      font-size: 13px;
+      min-height: 58px;
+      font-size: 15px;
     }
 
     @media (max-width: 1100px), (pointer: coarse) {
@@ -1014,8 +1013,8 @@
         grid-template-columns: 1fr;
         justify-items: center;
         text-align: center;
-        padding: 8px 10px 4px;
-        gap: 6px;
+        padding: 10px 12px 6px;
+        gap: 8px;
         background: linear-gradient(180deg, rgba(11, 10, 23, 0.86), rgba(11, 10, 23, 0.28), transparent);
         backdrop-filter: blur(10px);
       }
@@ -1025,7 +1024,7 @@
       }
 
       .title {
-        font-size: 19px;
+        font-size: 14px;
       }
 
       .subtitle {
@@ -1034,12 +1033,12 @@
 
       .highscore {
         min-width: 0;
-        width: min(100%, 300px);
-        padding: 6px 12px;
+        width: min(100%, 200px);
+        padding: 3px 8px;
       }
 
       .highscore .value {
-        font-size: 18px;
+        font-size: 12px;
       }
 
       .top-actions {
@@ -1048,9 +1047,9 @@
 
       .game-shell {
         height: auto;
-        padding: 2px 8px 8px;
+        padding: 4px 10px 12px;
         grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 10px;
       }
 
       .info-panel {
@@ -1064,37 +1063,32 @@
       }
 
       .player-card {
-        width: min(100%, 520px);
-        max-width: 520px;
+        width: min(100%, 540px);
+        max-width: 540px;
         min-width: 0;
-        padding: 8px;
-        border-radius: 18px;
-        scroll-margin-top: 74px;
+        padding: 10px;
+        border-radius: 22px;
+        scroll-margin-top: 86px;
       }
 
       .player-header {
-        padding: 2px 2px 6px;
+        padding: 2px 2px 10px;
       }
 
       .player-header h2 {
-        font-size: 15px;
+        font-size: 17px;
       }
 
       .status-badge {
-        min-width: 76px;
-        font-size: 9px;
-        padding: 5px 8px;
+        min-width: 86px;
+        font-size: 10px;
+        padding: 6px 9px;
       }
 
       .board-layout {
         grid-template-columns: 1fr;
         gap: 10px;
         justify-items: center;
-      }
-
-      .side-stack {
-        min-width: 0;
-        width: 100%;
       }
 
       .board-frame {
@@ -1110,22 +1104,22 @@
       }
 
       .board-message {
-        inset: 38px 8px auto 8px;
+        inset: 44px 8px auto 8px;
       }
 
       .board-message span {
-        font-size: 11px;
-        padding: 6px 10px;
+        font-size: 13px;
+        padding: 8px 12px;
       }
 
       .side-stack {
         width: 100%;
-        gap: 6px;
+        gap: 8px;
       }
 
       .stats-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 6px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
       }
 
       .stat-card {
@@ -1216,11 +1210,11 @@
 
     @media (max-width: 680px) {
       body {
-        padding-bottom: calc(180px + env(safe-area-inset-bottom));
+        padding-bottom: calc(var(--touch-ui-height, 0px) + 8px + env(safe-area-inset-bottom));
       }
 
       .topbar {
-        padding-top: calc(8px + env(safe-area-inset-top));
+        padding-top: calc(2px + env(safe-area-inset-top));
       }
 
       .subtitle {
@@ -1234,28 +1228,28 @@
       }
 
       .player-card {
-        padding: 8px;
-        scroll-margin-top: 78px;
+        padding: 4px;
+        scroll-margin-top: 54px;
       }
 
       .player-header {
-        padding-bottom: 8px;
+        padding-bottom: 3px;
       }
 
       .player-header h2 {
-        font-size: 15px;
+        font-size: 11px;
       }
 
       .board-frame {
-        width: min(100%, 280px, calc((100svh - 300px) / 2));
+        width: min(100%, var(--board-width));
+        margin-bottom: 2px;
       }
 
       .side-stack {
-        gap: 6px;
+        gap: 3px;
       }
 
-      .preview-card,
-      .notes-card {
+      .preview-card {
         display: none;
       }
 
@@ -1264,24 +1258,25 @@
       }
 
       .stat-card {
-        min-height: 54px;
-        padding: 8px 6px 6px;
+        min-height: 34px;
+        padding: 4px 3px 3px;
+        border-radius: 9px;
       }
 
       .stat-label {
-        font-size: 9px;
+        font-size: 6px;
       }
 
       .stat-value {
-        font-size: 16px;
+        font-size: 10px;
       }
 
       .touch-utility {
-        gap: 6px;
+        display: none;
       }
 
       .touch-strip {
-        padding: 8px;
+        padding: 3px;
       }
 
       .touch-strip-header {
@@ -1293,8 +1288,8 @@
       }
 
       .touch-btn {
-        min-height: 42px;
-        font-size: 15px;
+        min-height: 20px;
+        font-size: 9px;
       }
 
       .touch-btn.action-left,
@@ -1307,8 +1302,8 @@
       }
 
       .touch-btn.action-drop {
-        font-size: 12px;
-        letter-spacing: 0.02em;
+        font-size: 6px;
+        letter-spacing: 0;
       }
     }
 
@@ -1366,7 +1361,7 @@
 
       .side-stack {
         width: 100%;
-        gap: 6px;
+        gap: 8px;
       }
 
       .preview-card,
@@ -1426,32 +1421,41 @@
       grid-area: highscore;
       min-width: 0;
       width: 100%;
-      padding: 10px 16px;
-      gap: 4px;
+      padding: 6px 10px;
+      gap: 2px;
     }
-    body.layout-phone .highscore .value { font-size: 24px; }
+    body.layout-phone .highscore .value { font-size: 16px; }
 
     body.layout-phone .top-actions {
       grid-area: actions;
       display: flex;
-      gap: 8px;
+      gap: 4px;
       justify-self: end;
     }
 
     body.layout-phone .top-actions button {
-      min-height: 46px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: 13px;
-      letter-spacing: 0.08em;
+      min-height: 28px;
+      padding: 4px 6px;
+      border-radius: 10px;
+      font-size: 10px;
+      letter-spacing: 0.04em;
     }
 
     body.layout-phone .mobile-controls {
-      padding: 0 10px calc(12px + env(safe-area-inset-bottom));
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 2px 4px calc(2px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(12, 10, 24, 0), rgba(12, 10, 24, 0.10) 20%, rgba(12, 10, 24, 0.62) 100%);
+      backdrop-filter: blur(6px);
+      z-index: 9;
     }
 
     body.layout-phone .mobile-controls-inner {
-      gap: 12px;
+      gap: 3px;
+      max-width: 420px;
+      margin: 0 auto;
     }
 
     body.layout-phone .touch-utility {
@@ -1460,9 +1464,10 @@
 
     body.layout-phone .touch-strip {
       margin-top: 0;
-      padding: 12px;
-      border-radius: 24px;
+      padding: 3px;
+      border-radius: 10px;
       background: linear-gradient(180deg, rgba(7, 14, 38, 0.90), rgba(13, 11, 30, 0.94));
+      box-shadow: 0 4px 10px rgba(0,0,0,0.14);
     }
 
     body.layout-phone .touch-strip-header {
@@ -1471,62 +1476,61 @@
 
     body.layout-phone .touch-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      grid-template-areas:
-        "left left right right"
-        "rotate rotate down down"
-        "drop drop drop drop";
-      gap: 12px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 4px;
       align-items: stretch;
     }
 
     body.layout-phone .touch-btn {
-      min-height: 94px;
-      border-radius: 24px;
-      font-size: 32px;
+      min-height: 0;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1;
+      padding: 0;
     }
 
-    body.layout-phone .touch-btn.action-left { grid-area: left; }
-    body.layout-phone .touch-btn.action-right { grid-area: right; }
-    body.layout-phone .touch-btn.action-rotate { grid-area: rotate; }
-    body.layout-phone .touch-btn.action-down { grid-area: down; }
+    body.layout-phone .touch-btn.action-left,
+    body.layout-phone .touch-btn.action-right,
+    body.layout-phone .touch-btn.action-rotate,
+    body.layout-phone .touch-btn.action-down,
     body.layout-phone .touch-btn.action-drop {
-      grid-area: drop;
-      min-height: 84px;
-      font-size: 18px;
-      letter-spacing: 0.06em;
-      line-height: 1.15;
-      padding-inline: 10px;
+      grid-area: auto;
+    }
+
+    body.layout-phone .touch-btn.action-drop {
+      font-size: 10px;
+      letter-spacing: 0;
+      padding-inline: 0;
     }
 
     body.layout-phone .player-card {
-      width: min(100%, 720px);
-      padding: 8px 8px 10px;
+      width: min(100%, 620px);
+      padding: 6px 6px 8px;
     }
 
     body.layout-phone .board-frame {
-      width: min(100%, 440px, var(--board-width));
+      width: min(100%, 400px, var(--board-width));
     }
 
     @media (max-width: 420px) {
       body.layout-phone .topbar {
-        padding-inline: 10px;
+        padding-inline: 8px;
       }
       body.layout-phone .top-actions button {
-        min-height: 42px;
-        padding: 8px 10px;
-        font-size: 12px;
+        min-height: 28px;
+        padding: 4px 6px;
+        font-size: 10px;
       }
       body.layout-phone .touch-btn {
-        min-height: 82px;
-        font-size: 28px;
+        font-size: 12px;
       }
       body.layout-phone .touch-btn.action-drop {
-        min-height: 74px;
-        font-size: 15px;
+        font-size: 9px;
       }
       body.layout-phone .board-frame {
-        width: min(100%, 372px, var(--board-width));
+        width: min(100%, 352px, var(--board-width));
       }
     }
 
@@ -1536,157 +1540,192 @@
       }
     }
 
+  
 
-    /* v12 tablet layout tuning for iPad / Galaxy Tab */
-    body.layout-tablet .topbar {
-      padding: calc(12px + env(safe-area-inset-top)) 18px 8px;
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-      gap: 12px;
-    }
-
-    body.layout-tablet .title {
-      font-size: 24px;
-    }
-
-    body.layout-tablet .subtitle {
-      font-size: 11px;
-    }
-
-    body.layout-tablet .highscore {
-      min-width: min(52vw, 360px);
-      padding: 10px 20px;
-    }
-
-    body.layout-tablet .highscore .value {
-      font-size: 24px;
-    }
-
-    body.layout-tablet .game-shell {
-      padding: 8px 14px 18px;
-    }
-
-    body.layout-tablet .board-zone {
-      width: min(100%, 1120px);
-      margin: 0 auto;
-      gap: 14px;
-    }
-
-    body.layout-tablet .player-card {
-      width: min(100%, 980px);
-      padding: 12px;
-      scroll-margin-top: 92px;
-    }
-
-    body.layout-tablet .board-layout {
-      grid-template-columns: minmax(0, 1fr);
-      justify-items: center;
-      gap: 12px;
-    }
-
-    body.layout-tablet .board-frame {
-      width: min(100%, var(--board-width));
-      max-width: none;
-    }
-
-    body.layout-tablet .side-stack {
-      width: min(100%, 760px);
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      align-items: stretch;
-      gap: 12px;
-    }
-
-    body.layout-tablet .preview-card,
-    body.layout-tablet .notes-card {
-      min-height: 100%;
-    }
-
-    body.layout-tablet .mobile-controls {
-      position: sticky;
-      bottom: 0;
-      left: auto;
-      right: auto;
-      padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
-      background: linear-gradient(180deg, rgba(12, 10, 24, 0), rgba(12, 10, 24, 0.18) 22%, rgba(12, 10, 24, 0.50) 100%);
-      backdrop-filter: blur(10px);
-    }
-
-    body.layout-tablet .mobile-controls-inner {
-      max-width: 1120px;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 12px;
-      align-items: stretch;
-    }
-
-    body.layout-tablet .touch-strip {
-      padding: 14px 16px;
-      border-radius: 24px;
-    }
-
-    body.layout-tablet .touch-grid {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    body.layout-tablet .touch-btn {
-      min-height: 66px;
-      border-radius: 20px;
-      font-size: 22px;
-    }
-
-    body.layout-tablet .touch-btn.action-drop {
-      font-size: 16px;
-      letter-spacing: 0.04em;
-    }
-
-    @media (min-width: 768px) and (max-width: 1366px) and (pointer: coarse) and (orientation: portrait) {
-      body.layout-tablet .game-shell {
-        padding-inline: 12px;
+    /* Mobile deployment hardening: prevent font inflation and overgrown UI in hosted pages */
+    @media (max-width: 767px) {
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
       }
 
-      body.layout-tablet .player-card {
-        width: min(100%, 880px);
+      body.layout-phone {
+        padding-bottom: calc(var(--touch-ui-height, 0px) + 8px + env(safe-area-inset-bottom)) !important;
       }
 
-      body.layout-tablet .board-frame {
-        width: min(100%, var(--board-width));
+      body.layout-phone .topbar {
+        padding: 3px 5px 1px !important;
+        gap: 2px !important;
       }
 
-      body.layout-tablet .side-stack {
-        width: min(100%, 700px);
+      body.layout-phone .title {
+        font-size: 12px !important;
+      }
+
+      body.layout-phone .subtitle,
+      body.layout-phone .top-actions {
+        display: none !important;
+      }
+
+      body.layout-phone .highscore {
+        width: min(100%, 160px) !important;
+        min-width: 0 !important;
+        padding: 2px 6px !important;
+        gap: 0 !important;
+      }
+
+      body.layout-phone .highscore .label {
+        font-size: 7px !important;
+        letter-spacing: 0.08em !important;
+      }
+
+      body.layout-phone .highscore .value {
+        font-size: 10px !important;
+      }
+
+      body.layout-phone .game-shell {
+        padding: 0 2px 2px !important;
+        gap: 2px !important;
+      }
+
+      body.layout-phone .board-zone {
+        gap: 2px !important;
+      }
+
+      body.layout-phone .player-card {
+        width: min(100%, 404px) !important;
+        max-width: 404px !important;
+        padding: 2px !important;
+        border-radius: 10px !important;
+        scroll-margin-top: 34px !important;
+      }
+
+      body.layout-phone .player-header {
+        padding: 0 0 1px !important;
+      }
+
+      body.layout-phone .player-header h2 {
+        font-size: 9px !important;
+      }
+
+      body.layout-phone .status-badge {
+        min-width: 42px !important;
+        font-size: 6px !important;
+        padding: 2px 4px !important;
+      }
+
+      body.layout-phone .board-layout {
+        gap: 2px !important;
+      }
+
+      body.layout-phone .board-frame {
+        width: min(100%, var(--board-width)) !important;
+      }
+
+      body.layout-phone .side-stack {
+        gap: 2px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+
+      body.layout-phone .preview-card,
+      body.layout-phone .notes-card {
+        display: none !important;
+      }
+
+      body.layout-phone .stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 2px !important;
+      }
+
+      body.layout-phone .stat-card {
+        min-height: 24px !important;
+        padding: 2px 2px 1px !important;
+        border-radius: 7px !important;
+      }
+
+      body.layout-phone .stat-label {
+        font-size: 5px !important;
+        margin-bottom: 0 !important;
+      }
+
+      body.layout-phone .stat-value {
+        font-size: 8px !important;
+      }
+
+      body.layout-phone .stat-sub {
+        margin-top: 0 !important;
+        font-size: 5px !important;
+      }
+
+      body.layout-phone .board-message {
+        inset: 14px 3px auto 3px !important;
+      }
+
+      body.layout-phone .board-message span {
+        font-size: 7px !important;
+        padding: 2px 5px !important;
+      }
+
+      body.layout-phone .mobile-controls {
+        position: fixed !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        z-index: 12 !important;
+        padding: 1px 3px calc(1px + env(safe-area-inset-bottom)) !important;
+        background: linear-gradient(180deg, rgba(12, 10, 24, 0), rgba(12, 10, 24, 0.06) 18%, rgba(12, 10, 24, 0.52) 100%) !important;
+        backdrop-filter: blur(4px) !important;
+      }
+
+      body.layout-phone .mobile-controls-inner {
+        max-width: 400px !important;
+        gap: 3px !important;
+      }
+
+      body.layout-phone .touch-utility,
+      body.layout-phone .touch-strip-header {
+        display: none !important;
+      }
+
+      body.layout-phone .touch-strip {
+        padding: 3px !important;
+        border-radius: 9px !important;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.14) !important;
+      }
+
+      body.layout-phone .touch-grid {
+        display: grid !important;
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        gap: 3px !important;
+        align-items: stretch !important;
+      }
+
+      body.layout-phone .touch-btn {
+        min-height: 0 !important;
+        width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        font-size: 11px !important;
+        line-height: 1 !important;
+        border-radius: 8px !important;
+        padding: 0 !important;
+      }
+
+      body.layout-phone .touch-btn.action-left,
+      body.layout-phone .touch-btn.action-right,
+      body.layout-phone .touch-btn.action-rotate,
+      body.layout-phone .touch-btn.action-down,
+      body.layout-phone .touch-btn.action-drop {
+        grid-area: auto !important;
+      }
+
+      body.layout-phone .touch-btn.action-drop {
+        font-size: 9px !important;
+        letter-spacing: 0 !important;
       }
     }
 
-    @media (min-width: 900px) and (max-width: 1366px) and (pointer: coarse) and (orientation: landscape) {
-      body.layout-tablet .game-shell {
-        padding-inline: 16px;
-      }
-
-      body.layout-tablet .board-zone {
-        width: min(100%, 1240px);
-      }
-
-      body.layout-tablet .player-card {
-        width: min(100%, 1160px);
-      }
-
-      body.layout-tablet .side-stack {
-        width: min(100%, 860px);
-      }
-    }
-
-    @media (min-width: 768px) and (max-width: 1024px) and (pointer: coarse) {
-      body.layout-tablet .top-actions button {
-        min-height: 44px;
-        padding: 10px 14px;
-      }
-
-      body.layout-tablet .touch-btn {
-        min-height: 62px;
-        font-size: 20px;
-      }
-    }
-
-  </style>
+</style>
 </head>
 <body>
 
@@ -2039,7 +2078,7 @@
           <button class="touch-btn action-right" type="button" data-player="1" data-action="right">▶</button>
           <button class="touch-btn action-rotate" type="button" data-player="1" data-action="rotate">⟳</button>
           <button class="touch-btn action-down" type="button" data-player="1" data-action="down">▼</button>
-          <button class="touch-btn action-drop" type="button" data-player="1" data-action="drop">HARD DROP</button>
+          <button class="touch-btn action-drop" type="button" data-player="1" data-action="drop">HD</button>
         </div>
       </div>
 
@@ -2053,7 +2092,7 @@
           <button class="touch-btn action-right" type="button" data-player="2" data-action="right">▶</button>
           <button class="touch-btn action-rotate" type="button" data-player="2" data-action="rotate">⟳</button>
           <button class="touch-btn action-down" type="button" data-player="2" data-action="down">▼</button>
-          <button class="touch-btn action-drop" type="button" data-player="2" data-action="drop">HARD DROP</button>
+          <button class="touch-btn action-drop" type="button" data-player="2" data-action="drop">HD</button>
         </div>
       </div>
     </div>
@@ -2065,7 +2104,7 @@
         <div>
           <h1 class="overlay-title">TETRIS PALACE</h1>
           <p class="overlay-subtitle">
-            고전 테트리스를 데스크탑과 모바일 모두 대응하는 반응형 웹앱 스타일로 재구성했습니다. <span class="accent">1인용 / 2인용 모드 선택</span>, <span class="accent">15스테이지 속도 상승</span>, <span class="accent">중앙 상단 하이스코어 기록</span>, <span class="accent">입체감 있는 블록</span>, <span class="accent">라인 클리어 효과음</span>, <span class="accent">단순 리듬 배경음악</span>, 그리고 <span class="accent">모바일 터치 조작</span>이 모두 포함되어 있습니다.
+            고전 테트리스를 데스크탑과 모바일 모두 대응하는 반응형 웹앱 스타일로 재구성했습니다. <span class="accent">1인용 / 2인용 모드 선택</span>, <span class="accent">15스테이지 속도 상승</span>, <span class="accent">중앙 상단 하이스코어 기록</span>, <span class="accent">입체감 있는 블록</span>, 그리고 <span class="accent">모바일 터치 조작</span>이 모두 포함되어 있습니다.
           </p>
         </div>
       </div>
@@ -2206,274 +2245,6 @@
         }
       }
     };
-
-    const audioEngine = {
-      enabled: true,
-      ctx: null,
-      master: null,
-      musicGain: null,
-      fxGain: null,
-      compressor: null,
-      schedulerId: null,
-      isMusicRunning: false,
-      bpm: 108,
-      nextNoteTime: 0,
-      step: 0,
-
-      unlock() {
-        if (!this.enabled) return;
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        if (!this.ctx) {
-          this.ctx = new AudioCtx();
-          this.master = this.ctx.createGain();
-          this.master.gain.value = 0.22;
-          this.musicGain = this.ctx.createGain();
-          this.musicGain.gain.value = 0.0001;
-          this.fxGain = this.ctx.createGain();
-          this.fxGain.gain.value = 0.9;
-          this.compressor = this.ctx.createDynamicsCompressor();
-          this.compressor.threshold.value = -22;
-          this.compressor.knee.value = 18;
-          this.compressor.ratio.value = 8;
-          this.compressor.attack.value = 0.004;
-          this.compressor.release.value = 0.18;
-          this.musicGain.connect(this.compressor);
-          this.fxGain.connect(this.compressor);
-          this.compressor.connect(this.master);
-          this.master.connect(this.ctx.destination);
-        }
-        if (this.ctx.state === 'suspended') {
-          this.ctx.resume();
-        }
-      },
-
-      pulseGain(gainNode, time, peak, release = 0.18) {
-        gainNode.gain.cancelScheduledValues(time);
-        gainNode.gain.setValueAtTime(0.0001, time);
-        gainNode.gain.linearRampToValueAtTime(peak, time + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, time + release);
-      },
-
-      createNoiseBuffer() {
-        if (!this.ctx) return null;
-        const length = Math.max(1, Math.floor(this.ctx.sampleRate * 0.18));
-        const buffer = this.ctx.createBuffer(1, length, this.ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < length; i += 1) {
-          data[i] = (Math.random() * 2 - 1) * (1 - i / length);
-        }
-        return buffer;
-      },
-
-      playKick(time, level = 0.18) {
-        if (!this.ctx) return;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(140, time);
-        osc.frequency.exponentialRampToValueAtTime(48, time + 0.14);
-        gain.gain.setValueAtTime(level, time);
-        gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.16);
-        osc.connect(gain);
-        gain.connect(this.musicGain);
-        osc.start(time);
-        osc.stop(time + 0.18);
-      },
-
-      playSnare(time, level = 0.10) {
-        if (!this.ctx) return;
-        const noise = this.ctx.createBufferSource();
-        noise.buffer = this.createNoiseBuffer();
-        const noiseFilter = this.ctx.createBiquadFilter();
-        noiseFilter.type = 'highpass';
-        noiseFilter.frequency.value = 1500;
-        const noiseGain = this.ctx.createGain();
-        noiseGain.gain.setValueAtTime(level, time);
-        noiseGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.12);
-        noise.connect(noiseFilter);
-        noiseFilter.connect(noiseGain);
-        noiseGain.connect(this.musicGain);
-        noise.start(time);
-        noise.stop(time + 0.14);
-
-        const tone = this.ctx.createOscillator();
-        const toneGain = this.ctx.createGain();
-        tone.type = 'triangle';
-        tone.frequency.setValueAtTime(190, time);
-        tone.frequency.exponentialRampToValueAtTime(110, time + 0.08);
-        toneGain.gain.setValueAtTime(level * 0.7, time);
-        toneGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.1);
-        tone.connect(toneGain);
-        toneGain.connect(this.musicGain);
-        tone.start(time);
-        tone.stop(time + 0.11);
-      },
-
-      playHat(time, level = 0.032) {
-        if (!this.ctx) return;
-        const noise = this.ctx.createBufferSource();
-        noise.buffer = this.createNoiseBuffer();
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.value = 8500;
-        filter.Q.value = 0.8;
-        const gain = this.ctx.createGain();
-        gain.gain.setValueAtTime(level, time);
-        gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.045);
-        noise.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.musicGain);
-        noise.start(time);
-        noise.stop(time + 0.06);
-      },
-
-      playBass(time, freq, duration = 0.22, level = 0.06) {
-        if (!this.ctx) return;
-        const osc = this.ctx.createOscillator();
-        const sub = this.ctx.createOscillator();
-        const filter = this.ctx.createBiquadFilter();
-        const gain = this.ctx.createGain();
-
-        osc.type = 'triangle';
-        sub.type = 'sine';
-        osc.frequency.setValueAtTime(freq, time);
-        sub.frequency.setValueAtTime(freq / 2, time);
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(860, time);
-        filter.Q.value = 0.9;
-
-        gain.gain.setValueAtTime(0.0001, time);
-        gain.gain.linearRampToValueAtTime(level, time + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
-
-        osc.connect(filter);
-        sub.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.musicGain);
-
-        osc.start(time);
-        sub.start(time);
-        osc.stop(time + duration + 0.02);
-        sub.stop(time + duration + 0.02);
-      },
-
-      playPluck(time, freq, duration = 0.18, level = 0.045) {
-        if (!this.ctx) return;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        const filter = this.ctx.createBiquadFilter();
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(freq, time);
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(1800, time);
-        gain.gain.setValueAtTime(0.0001, time);
-        gain.gain.linearRampToValueAtTime(level, time + 0.008);
-        gain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.musicGain);
-        osc.start(time);
-        osc.stop(time + duration + 0.02);
-      },
-
-      scheduleMusic() {
-        if (!this.ctx || !this.isMusicRunning) return;
-        const stepDuration = (60 / this.bpm) / 2;
-        if (!this.nextNoteTime || this.nextNoteTime < this.ctx.currentTime) {
-          this.nextNoteTime = this.ctx.currentTime + 0.04;
-        }
-
-        while (this.nextNoteTime < this.ctx.currentTime + 0.35) {
-          const step = this.step % 16;
-          const bassline = [65.41, 65.41, 82.41, 73.42, 65.41, 65.41, 98.00, 82.41];
-          const melody = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 440.00, 349.23];
-
-          if (step % 4 === 0) {
-            this.playKick(this.nextNoteTime, 0.17);
-            this.playBass(this.nextNoteTime, bassline[Math.floor(step / 2) % bassline.length], 0.24, 0.058);
-          }
-          if (step % 8 === 4) {
-            this.playSnare(this.nextNoteTime, 0.085);
-          }
-          if (step % 2 === 1) {
-            this.playHat(this.nextNoteTime, 0.028);
-          }
-          if ([0, 3, 6, 7, 8, 11, 14, 15].includes(step)) {
-            this.playPluck(this.nextNoteTime + 0.01, melody[step % melody.length], step % 8 === 7 ? 0.3 : 0.2, 0.038);
-          }
-
-          this.nextNoteTime += stepDuration;
-          this.step += 1;
-        }
-      },
-
-      startMusic() {
-        this.unlock();
-        if (!this.ctx || this.isMusicRunning) return;
-        this.isMusicRunning = true;
-        this.nextNoteTime = this.ctx.currentTime + 0.05;
-        this.musicGain.gain.cancelScheduledValues(this.ctx.currentTime);
-        this.musicGain.gain.setValueAtTime(Math.max(this.musicGain.gain.value, 0.0001), this.ctx.currentTime);
-        this.musicGain.gain.linearRampToValueAtTime(0.36, this.ctx.currentTime + 0.3);
-        this.scheduleMusic();
-        this.schedulerId = window.setInterval(() => this.scheduleMusic(), 120);
-      },
-
-      stopMusic(fade = 0.16) {
-        if (!this.ctx) return;
-        this.isMusicRunning = false;
-        if (this.schedulerId) {
-          window.clearInterval(this.schedulerId);
-          this.schedulerId = null;
-        }
-        const now = this.ctx.currentTime;
-        this.musicGain.gain.cancelScheduledValues(now);
-        this.musicGain.gain.setValueAtTime(Math.max(this.musicGain.gain.value, 0.0001), now);
-        this.musicGain.gain.exponentialRampToValueAtTime(0.0001, now + fade);
-      },
-
-      playLineClear(lines = 1) {
-        this.unlock();
-        if (!this.ctx || !this.fxGain) return;
-        const now = this.ctx.currentTime + 0.01;
-        const noteSets = {
-          1: [523.25, 659.25],
-          2: [523.25, 659.25, 783.99],
-          3: [659.25, 783.99, 987.77],
-          4: [523.25, 659.25, 783.99, 1046.5]
-        };
-        const notes = noteSets[lines] || noteSets[1];
-        notes.forEach((freq, index) => {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = index === notes.length - 1 && lines >= 4 ? 'triangle' : 'square';
-          osc.frequency.setValueAtTime(freq, now + index * 0.045);
-          gain.gain.setValueAtTime(0.0001, now + index * 0.045);
-          gain.gain.linearRampToValueAtTime(Math.min(0.22, 0.12 + lines * 0.018), now + index * 0.045 + 0.01);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.045 + 0.18);
-          osc.connect(gain);
-          gain.connect(this.fxGain);
-          osc.start(now + index * 0.045);
-          osc.stop(now + index * 0.045 + 0.22);
-        });
-
-        const shimmer = this.ctx.createBufferSource();
-        shimmer.buffer = this.createNoiseBuffer();
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'highpass';
-        filter.frequency.value = 3200;
-        const gain = this.ctx.createGain();
-        gain.gain.setValueAtTime(0.06 + lines * 0.014, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16 + lines * 0.02);
-        shimmer.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.fxGain);
-        shimmer.start(now);
-        shimmer.stop(now + 0.22);
-      }
-    };
-
 
     function padScore(value) {
       return String(Math.max(0, Math.floor(value))).padStart(7, '0');
@@ -2722,7 +2493,6 @@
         }
 
         if (cleared > 0) {
-          audioEngine.playLineClear(cleared);
           this.totalLines += cleared;
           this.stageProgress += cleared;
           this.score += (SCORE_TABLE[cleared] || 0) * this.stage;
@@ -3160,8 +2930,6 @@
       lastTime: 0,
 
       start(mode) {
-        audioEngine.unlock();
-        audioEngine.startMusic();
         this.mode = mode;
         this.state = 'playing';
         this.lastTime = performance.now();
@@ -3192,13 +2960,7 @@
 
       pauseToggle() {
         if (this.state === 'menu' || this.state === 'finished') return;
-        audioEngine.unlock();
         this.state = this.state === 'paused' ? 'playing' : 'paused';
-        if (this.state === 'paused') {
-          audioEngine.stopMusic(0.08);
-        } else {
-          audioEngine.startMusic();
-        }
         dom.pauseBtn.textContent = this.state === 'paused' ? '계속하기' : '일시정지';
         players.forEach((player, index) => {
           if (index === 1 && this.mode !== 2) return;
@@ -3214,7 +2976,6 @@
       },
 
       returnToMenu() {
-        audioEngine.stopMusic(0.12);
         this.state = 'menu';
         dom.menuOverlay.classList.remove('hidden');
         dom.resultOverlay.classList.add('hidden');
@@ -3243,9 +3004,6 @@
       handlePlayerEnd() {
         const activePlayers = players.filter((player, index) => index === 0 || this.mode === 2);
         const winner = activePlayers.find((player) => player.won);
-        if (winner) {
-          audioEngine.stopMusic(0.18);
-        }
 
         if (winner) {
           this.state = 'finished';
@@ -3263,7 +3021,6 @@
 
         const remaining = activePlayers.filter((player) => !player.gameOver && !player.won);
         if (remaining.length === 0) {
-          audioEngine.stopMusic(0.18);
           this.state = 'finished';
           this.showResult(null);
         }
@@ -3403,31 +3160,24 @@
       const tabletLayout = isTabletTouchLayout();
       const topbarHeight = dom.topbar ? dom.topbar.offsetHeight : 0;
       const controlsVisible = touchLayout && dom.mobileControls && dom.mobileControls.classList.contains('is-visible');
-      const estimatedTouchHeight = phoneLayout ? (vw <= 680 ? 126 : 136) : (tabletLayout ? 92 : 0);
+      const estimatedTouchHeight = phoneLayout ? (vw <= 680 ? 26 : 32) : (tabletLayout ? 0 : 0);
       const touchHeight = controlsVisible ? dom.mobileControls.offsetHeight : estimatedTouchHeight;
       document.documentElement.style.setProperty('--touch-ui-height', `${phoneLayout ? touchHeight : 0}px`);
 
       let boardWidth = 320;
       if (phoneLayout) {
-        const horizontalPad = vw <= 680 ? 8 : 18;
-        const reservedHeight = topbarHeight + touchHeight + (vw <= 680 ? 12 : 20);
-        const maxWidthByScreen = Math.max(240, vw - horizontalPad);
-        const maxWidthByHeight = Math.max(240, Math.floor((vh - reservedHeight) / 2));
-        boardWidth = Math.min(460, maxWidthByScreen, maxWidthByHeight);
+        const horizontalPad = vw <= 680 ? 4 : 10;
+        const reservedHeight = topbarHeight + touchHeight + (vw <= 680 ? 8 : 12);
+        const maxWidthByScreen = Math.max(228, vw - horizontalPad);
+        const maxWidthByHeight = Math.max(228, Math.floor((vh - reservedHeight) / 2));
+        boardWidth = Math.min(488, maxWidthByScreen, maxWidthByHeight);
         if (vw <= 420) boardWidth = Math.min(boardWidth, 372);
-        if (vw <= 390) boardWidth = Math.min(boardWidth, 346);
+        if (vw <= 390) boardWidth = Math.min(boardWidth, 348);
       } else if (tabletLayout) {
-        const isLandscape = vw > vh;
-        const controlsReserve = controlsVisible ? Math.min(Math.max(touchHeight, 84), 164) : 96;
-        const widthDivisor = game.mode === 2 ? (isLandscape ? 2.16 : 2.02) : (isLandscape ? 1.28 : 1.08);
-        const horizontalPad = game.mode === 2 ? (isLandscape ? 92 : 56) : (isLandscape ? 72 : 44);
-        const verticalReserve = topbarHeight + controlsReserve + (isLandscape ? 30 : 44);
-        const maxWidthByScreen = Math.max(250, Math.floor((vw - horizontalPad) / widthDivisor));
-        const maxWidthByHeight = Math.max(250, Math.floor((vh - verticalReserve) / 2));
-        const tabletCap = game.mode === 2
-          ? (isLandscape ? 360 : 332)
-          : (isLandscape ? 470 : 424);
-        boardWidth = Math.min(tabletCap, maxWidthByScreen, maxWidthByHeight);
+        const horizontalPad = game.mode === 2 ? 64 : 52;
+        const maxWidthByScreen = Math.max(240, Math.floor((vw - horizontalPad) / (game.mode === 2 ? 2.15 : 1.45)));
+        const maxWidthByHeight = Math.max(240, Math.floor((vh - topbarHeight - 88) / 2));
+        boardWidth = Math.min(360, maxWidthByScreen, maxWidthByHeight);
       } else if (vw < 1320) {
         boardWidth = Math.max(260, Math.min(320, Math.floor((vw - 460) / (game.mode === 2 ? 2.25 : 1.6))));
       }
@@ -3482,7 +3232,6 @@
     }
 
     function startTouchHold(button) {
-      audioEngine.unlock();
       if (game.state !== 'playing' && game.state !== 'paused') return;
       const playerId = Number(button.dataset.player || 0);
       const action = button.dataset.action;
@@ -3532,6 +3281,14 @@
         Array.from(touchHoldState.keys()).forEach((key) => endTouchHold(key));
       }
     }
+
+    function updateTouchButtonLabels() {
+      const phone = isPhoneTouchLayout();
+      document.querySelectorAll('.touch-btn.action-drop').forEach((button) => {
+        button.textContent = phone ? 'HD' : 'HD';
+      });
+    }
+
 
     function bindTouchControls() {
       document.querySelectorAll('[data-player][data-action]').forEach((button) => {
@@ -3583,6 +3340,7 @@
     function refreshResponsiveUI() {
       updateResponsiveModeClasses();
       updateTouchPanels();
+      updateTouchButtonLabels();
       applyResponsiveBoardSizing();
       createSakuraPetals(isMobileTouchLayout() ? 28 : 56);
       players.forEach((player) => player.draw());
@@ -3600,7 +3358,6 @@
     }
 
     function handleKeyDown(event) {
-      audioEngine.unlock();
       const code = normalizeCode(event.code, event.key);
       const controlledCodes = [
         'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Space',
