@@ -904,42 +904,42 @@
     }
 
     body.layout-phone .mobile-controls {
-      padding: 18px 14px calc(18px + env(safe-area-inset-bottom));
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
     }
 
     body.layout-phone .mobile-controls-inner {
-      gap: 14px;
+      gap: 8px;
     }
 
     body.layout-phone .touch-strip {
-      padding: 18px;
-      border-radius: 28px;
+      padding: 10px;
+      border-radius: 20px;
     }
 
     body.layout-phone .touch-grid {
-      gap: 14px;
+      gap: 8px;
     }
 
     body.layout-phone .touch-btn {
-      min-height: 102px;
-      border-radius: 26px;
-      font-size: 32px;
+      min-height: 72px;
+      border-radius: 18px;
+      font-size: 24px;
     }
 
     body.layout-phone .touch-btn.utility {
-      min-height: 76px;
-      font-size: 20px;
+      min-height: 54px;
+      font-size: 16px;
     }
 
     @media (max-width: 420px) {
       body.layout-phone .touch-btn {
-        min-height: 92px;
-        font-size: 29px;
+        min-height: 64px;
+        font-size: 22px;
       }
 
       body.layout-phone .touch-btn.utility {
-        min-height: 68px;
-        font-size: 18px;
+        min-height: 48px;
+        font-size: 15px;
       }
     }
 
@@ -952,16 +952,16 @@
       left: auto;
       right: auto;
       bottom: 0;
-      padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
-      background: linear-gradient(180deg, rgba(12, 10, 24, 0), rgba(12, 10, 24, 0.18) 24%, rgba(12, 10, 24, 0.46) 100%);
+      padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(12, 10, 24, 0), rgba(12, 10, 24, 0.14) 24%, rgba(12, 10, 24, 0.36) 100%);
       backdrop-filter: blur(8px);
     }
 
     body.layout-tablet .mobile-controls-inner {
       max-width: 980px;
-      grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+      grid-template-columns: minmax(150px, 180px) minmax(0, 1fr);
       align-items: start;
-      gap: 12px;
+      gap: 8px;
     }
 
     body.layout-tablet .touch-utility {
@@ -970,21 +970,21 @@
     }
 
     body.layout-tablet .touch-strip {
-      padding: 14px;
+      padding: 10px;
     }
 
     body.layout-tablet .touch-grid {
-      gap: 10px;
+      gap: 8px;
     }
 
     body.layout-tablet .touch-btn {
-      min-height: 62px;
-      font-size: 20px;
+      min-height: 50px;
+      font-size: 17px;
     }
 
     body.layout-tablet .touch-btn.utility {
-      min-height: 58px;
-      font-size: 15px;
+      min-height: 44px;
+      font-size: 13px;
     }
 
     @media (max-width: 1100px), (pointer: coarse) {
@@ -1014,8 +1014,8 @@
         grid-template-columns: 1fr;
         justify-items: center;
         text-align: center;
-        padding: 10px 12px 6px;
-        gap: 8px;
+        padding: 8px 10px 4px;
+        gap: 6px;
         background: linear-gradient(180deg, rgba(11, 10, 23, 0.86), rgba(11, 10, 23, 0.28), transparent);
         backdrop-filter: blur(10px);
       }
@@ -1025,7 +1025,7 @@
       }
 
       .title {
-        font-size: 22px;
+        font-size: 19px;
       }
 
       .subtitle {
@@ -1034,12 +1034,12 @@
 
       .highscore {
         min-width: 0;
-        width: min(100%, 340px);
-        padding: 8px 14px;
+        width: min(100%, 300px);
+        padding: 6px 12px;
       }
 
       .highscore .value {
-        font-size: 22px;
+        font-size: 18px;
       }
 
       .top-actions {
@@ -1048,9 +1048,9 @@
 
       .game-shell {
         height: auto;
-        padding: 4px 10px 12px;
+        padding: 2px 8px 8px;
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 8px;
       }
 
       .info-panel {
@@ -1064,26 +1064,26 @@
       }
 
       .player-card {
-        width: min(100%, 540px);
-        max-width: 540px;
+        width: min(100%, 520px);
+        max-width: 520px;
         min-width: 0;
-        padding: 10px;
-        border-radius: 22px;
-        scroll-margin-top: 86px;
+        padding: 8px;
+        border-radius: 18px;
+        scroll-margin-top: 74px;
       }
 
       .player-header {
-        padding: 2px 2px 10px;
+        padding: 2px 2px 6px;
       }
 
       .player-header h2 {
-        font-size: 17px;
+        font-size: 15px;
       }
 
       .status-badge {
-        min-width: 86px;
-        font-size: 10px;
-        padding: 6px 9px;
+        min-width: 76px;
+        font-size: 9px;
+        padding: 5px 8px;
       }
 
       .board-layout {
@@ -1110,22 +1110,22 @@
       }
 
       .board-message {
-        inset: 44px 8px auto 8px;
+        inset: 38px 8px auto 8px;
       }
 
       .board-message span {
-        font-size: 13px;
-        padding: 8px 12px;
+        font-size: 11px;
+        padding: 6px 10px;
       }
 
       .side-stack {
         width: 100%;
-        gap: 8px;
+        gap: 6px;
       }
 
       .stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
       }
 
       .stat-card {
@@ -1254,7 +1254,8 @@
         gap: 6px;
       }
 
-      .preview-card {
+      .preview-card,
+      .notes-card {
         display: none;
       }
 
@@ -1365,7 +1366,7 @@
 
       .side-stack {
         width: 100%;
-        gap: 8px;
+        gap: 6px;
       }
 
       .preview-card,
@@ -3402,30 +3403,30 @@
       const tabletLayout = isTabletTouchLayout();
       const topbarHeight = dom.topbar ? dom.topbar.offsetHeight : 0;
       const controlsVisible = touchLayout && dom.mobileControls && dom.mobileControls.classList.contains('is-visible');
-      const estimatedTouchHeight = phoneLayout ? (vw <= 680 ? 176 : 188) : (tabletLayout ? 128 : 0);
+      const estimatedTouchHeight = phoneLayout ? (vw <= 680 ? 126 : 136) : (tabletLayout ? 92 : 0);
       const touchHeight = controlsVisible ? dom.mobileControls.offsetHeight : estimatedTouchHeight;
       document.documentElement.style.setProperty('--touch-ui-height', `${phoneLayout ? touchHeight : 0}px`);
 
       let boardWidth = 320;
       if (phoneLayout) {
-        const horizontalPad = vw <= 680 ? 10 : 20;
-        const reservedHeight = topbarHeight + touchHeight + (vw <= 680 ? 20 : 34);
+        const horizontalPad = vw <= 680 ? 8 : 18;
+        const reservedHeight = topbarHeight + touchHeight + (vw <= 680 ? 12 : 20);
         const maxWidthByScreen = Math.max(240, vw - horizontalPad);
         const maxWidthByHeight = Math.max(240, Math.floor((vh - reservedHeight) / 2));
-        boardWidth = Math.min(440, maxWidthByScreen, maxWidthByHeight);
-        if (vw <= 420) boardWidth = Math.min(boardWidth, 356);
-        if (vw <= 390) boardWidth = Math.min(boardWidth, 332);
+        boardWidth = Math.min(460, maxWidthByScreen, maxWidthByHeight);
+        if (vw <= 420) boardWidth = Math.min(boardWidth, 372);
+        if (vw <= 390) boardWidth = Math.min(boardWidth, 346);
       } else if (tabletLayout) {
         const isLandscape = vw > vh;
-        const controlsReserve = controlsVisible ? Math.min(Math.max(touchHeight, 112), 220) : 132;
+        const controlsReserve = controlsVisible ? Math.min(Math.max(touchHeight, 84), 164) : 96;
         const widthDivisor = game.mode === 2 ? (isLandscape ? 2.16 : 2.02) : (isLandscape ? 1.28 : 1.08);
         const horizontalPad = game.mode === 2 ? (isLandscape ? 92 : 56) : (isLandscape ? 72 : 44);
-        const verticalReserve = topbarHeight + controlsReserve + (isLandscape ? 52 : 82);
+        const verticalReserve = topbarHeight + controlsReserve + (isLandscape ? 30 : 44);
         const maxWidthByScreen = Math.max(250, Math.floor((vw - horizontalPad) / widthDivisor));
         const maxWidthByHeight = Math.max(250, Math.floor((vh - verticalReserve) / 2));
         const tabletCap = game.mode === 2
-          ? (isLandscape ? 350 : 320)
-          : (isLandscape ? 430 : 392);
+          ? (isLandscape ? 360 : 332)
+          : (isLandscape ? 470 : 424);
         boardWidth = Math.min(tabletCap, maxWidthByScreen, maxWidthByHeight);
       } else if (vw < 1320) {
         boardWidth = Math.max(260, Math.min(320, Math.floor((vw - 460) / (game.mode === 2 ? 2.25 : 1.6))));
