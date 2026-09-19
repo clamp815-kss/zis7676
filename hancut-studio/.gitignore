@@ -1,0 +1,8 @@
+.gradle/
+build/
+out/
+*.hancut
+*.mp4
+.cache/
+tools/ffmpeg*
+tools/ffprobe*
