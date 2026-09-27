@@ -1,0 +1,43 @@
+name: cardnews-exe
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'cardnews/**'
+      - '.github/workflows/cardnews-exe.yml'
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: cardnews
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build
+        run: node tools/build-exe.js win-x64
+      - name: Smoke test
+        shell: pwsh
+        run: |
+          $env:CARDNEWS_NO_OPEN = '1'
+          $p = Start-Process -FilePath .\dist\cardnews-win-x64.exe -WorkingDirectory .\dist -PassThru -RedirectStandardOutput out.log -RedirectStandardError err.log
+          $ok = $false
+          for ($i = 0; $i -lt 30; $i++) {
+            Start-Sleep -Seconds 1
+            try { $r = Invoke-RestMethod http://localhost:8787/ping; if ($r.ok) { $ok = $true; break } } catch {}
+          }
+          $html = (Invoke-WebRequest http://localhost:8787/ -UseBasicParsing).StatusCode
+          Stop-Process -Id $p.Id -Force
+          Get-Content out.log, err.log
+          if (-not $ok -or $html -ne 200) { throw "smoke test failed (ping=$ok, index=$html)" }
+          if (-not (Test-Path .\dist\editor\index.html)) { throw 'editor files were not extracted' }
+          Write-Output "ping ok, index 200, editor extracted"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cardnews-win-x64
+          path: cardnews/dist/cardnews-win-x64.exe
+          retention-days: 30

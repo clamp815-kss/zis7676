@@ -17,6 +17,17 @@
 
 콘솔에 팀원용 주소(`http://<호스트IP>:8787/`)와 기능별 활성 상태가 출력됩니다.
 
+### 실행파일로 쓰기 (Node.js 설치 불필요)
+`cardnews-win-x64.exe` 하나를 빈 폴더에 두고 더블클릭하면 됩니다.
+- 처음 실행하면 exe 옆에 `editor/`, `tools/` 폴더가 만들어지고, 서버가 뜨면서 브라우저가 자동으로 열립니다.
+- 키 파일(`tools/*-key.txt`)은 이 `tools/` 폴더에 넣습니다. 새 버전 exe로 바꿔도 키 파일과 생성 이미지는 보존됩니다.
+- AI 변환에는 여전히 호스트에 `claude` CLI(Claude Code) 로그인이 필요합니다. exe가 대신하는 것은 Node.js 설치뿐입니다.
+- 서명되지 않은 exe라서 처음 실행할 때 Windows SmartScreen 경고가 뜰 수 있습니다 → "추가 정보 → 실행".
+
+직접 빌드: `node tools/build-exe.js win-x64` (대상: `win-x64` `linux-x64` `darwin-arm64` 등, 결과는 `dist/`).
+빌드 PC에 Node 22+와 인터넷(대상용 node 바이너리 다운로드, `npx postject`)이 필요합니다. macOS용은 macOS에서 빌드해야 서명까지 됩니다.
+GitHub Actions(`.github/workflows/cardnews-exe.yml`)가 Windows에서 빌드·실행 테스트 후 exe를 Artifact로 올립니다.
+
 ### 팀원
 브라우저(Chrome 계열)로 `http://<호스트IP>:8787/` 접속. 끝.
 에디터를 다른 경로로 열었다면 상단 ⚙에서 호스트 주소를 입력하세요.

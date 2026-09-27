@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 카드뉴스 로컬 서버 (AI 브리지) — Node.js 18+ 내장 모듈만 사용, 의존성 0
+// 카드뉴스 로컬 서버 (AI 브리지) — Node.js 22+ 내장 모듈만 사용, 의존성 0
 // 엔드포인트: GET / (정적) · GET /ping · POST /convert · POST /img-gen · GET /img-search · GET /img?url=
 'use strict';
 
@@ -10,9 +10,51 @@ const os = require('os');
 const crypto = require('crypto');
 const { spawn, spawnSync } = require('child_process');
 
+// 실행파일(Node SEA) 모드: 에디터·도구 파일이 exe에 내장되어 있고, exe 옆 폴더에 풀어서 사용
+const SEA = (() => {
+  try { const sea = require('node:sea'); return sea.isSea() ? sea : null; } catch { return null; }
+})();
+
 const PORT = Number(process.env.PORT) || 8787;
 const HOST = '0.0.0.0';
-const ROOT = __dirname;
+const ROOT = SEA ? path.dirname(process.execPath) : __dirname;
+if (SEA) process.on('uncaughtException', (e) => { console.error(`\n❌ 오류: ${e.message}`); exitWithPause(1); });
+if (SEA) extractBundle();
+
+// 내장 파일을 exe 옆에 풀기. 버전이 바뀌었으면 내장 파일을 갱신하고, 같으면 없는 파일만 채움
+// (키 파일 tools/*-key.txt와 생성 이미지는 내장 대상이 아니므로 절대 덮어쓰지 않음)
+function extractBundle() {
+  const manifest = JSON.parse(SEA.getAsset('manifest.json', 'utf8'));
+  const marker = path.join(ROOT, 'editor', '.bundle-version');
+  let prev = '';
+  try { prev = fs.readFileSync(marker, 'utf8').trim(); } catch {}
+  const upgrade = prev !== manifest.version;
+  let n = 0;
+  for (const rel of manifest.files) {
+    const dest = path.join(ROOT, ...rel.split('/'));
+    if (!upgrade && fs.existsSync(dest)) continue;
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.writeFileSync(dest, Buffer.from(SEA.getAsset(rel)));
+    n++;
+  }
+  fs.mkdirSync(path.dirname(marker), { recursive: true });
+  fs.writeFileSync(marker, manifest.version);
+  if (n) console.log(`📦 에디터 파일 ${n}개 준비 완료 (${ROOT})`);
+}
+
+// exe를 더블클릭한 경우 오류 시 창이 바로 닫히지 않도록 Enter 대기
+function exitWithPause(code) {
+  if (!SEA || !process.stdin.isTTY) process.exit(code);
+  console.log('Enter 키를 누르면 종료합니다.');
+  process.stdin.once('data', () => process.exit(code));
+}
+
+function openBrowser(url) {
+  if (process.env.CARDNEWS_NO_OPEN) return;
+  const [cmd, args] = IS_WIN ? ['explorer.exe', [url]]
+    : process.platform === 'darwin' ? ['open', [url]] : ['xdg-open', [url]];
+  try { spawn(cmd, args, { stdio: 'ignore', detached: true, windowsHide: true }).on('error', () => {}).unref(); } catch {}
+}
 const EDITOR = path.join(ROOT, 'editor');
 const TOOLS = path.join(ROOT, 'tools');
 const GEN = path.join(EDITOR, 'assets', 'gen');
@@ -448,7 +490,9 @@ server.on('error', (e) => {
     console.error(`\n❌ 포트 ${PORT}이(가) 이미 사용 중입니다.`);
     console.error('   · 이미 서버가 켜져 있다면 그 창을 그대로 쓰세요 (브라우저에서 http://localhost:' + PORT + '/).');
     console.error('   · 다른 프로그램이 쓰고 있다면 PORT 환경변수로 바꿔 실행하세요.  예) set PORT=8788 && node server.js\n');
-    process.exit(1);
+    if (SEA) openBrowser(`http://localhost:${PORT}/`);
+    exitWithPause(1);
+    return;
   }
   throw e;
 });
@@ -469,5 +513,7 @@ server.listen(PORT, HOST, () => {
   console.log(`   ${on(c.gemini)} 배경 생성 · Gemini 키 (tools/gemini-key.txt)`);
   console.log(`   ${on(c.openai)} 배경 생성 · OpenAI 키 (tools/openai-key.txt)`);
   console.log(`   ${c.pexels ? '✅ 스톡 검색 · Pexels' : '✅ 스톡 검색 · Openverse (무키 폴백)'}`);
-  console.log('\n   ⚠️  인증 없는 사내 LAN 전용 서버입니다. 공인망에 노출하지 마세요.\n');
+  console.log('\n   ⚠️  인증 없는 사내 LAN 전용 서버입니다. 공인망에 노출하지 마세요.');
+  console.log('   종료하려면 이 창을 닫거나 Ctrl+C\n');
+  if (SEA) openBrowser(`http://localhost:${PORT}/`);
 });
