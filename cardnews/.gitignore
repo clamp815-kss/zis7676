@@ -1,0 +1,5 @@
+tools/*-key.txt
+editor/assets/gen/*
+!editor/assets/gen/.gitkeep
+node_modules/
+out/
