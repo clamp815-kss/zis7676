@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Galaxy S25 Ultra 50s Reel (unofficial concept)</title>
+<style>
+  @font-face { font-family: P; font-weight: 300; src: url(fonts/Pretendard-Light.woff2) format("woff2"); }
+  @font-face { font-family: P; font-weight: 500; src: url(fonts/Pretendard-Medium.woff2) format("woff2"); }
+  @font-face { font-family: P; font-weight: 600; src: url(fonts/Pretendard-SemiBold.woff2) format("woff2"); }
+  @font-face { font-family: P; font-weight: 700; src: url(fonts/Pretendard-Bold.woff2) format("woff2"); }
+  @font-face { font-family: P; font-weight: 800; src: url(fonts/Pretendard-ExtraBold.woff2) format("woff2"); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+  body { font-family: P, sans-serif; color: #fff; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  #bg { position: absolute; inset: 0; }
+
+  /* ---------- 3D 폰 ---------- */
+  .scene3d { position: absolute; inset: 0; perspective: 2400px; }
+  .phone { position: absolute; left: 50%; top: 50%; width: 520px; height: 1100px; margin: -550px 0 0 -260px; transform-style: preserve-3d; }
+  .face { position: absolute; inset: 0; border-radius: 64px; backface-visibility: hidden; overflow: hidden; }
+  .front { background: linear-gradient(135deg, #4a4d53, #1a1b1f 40%, #36383d); padding: 12px; box-shadow: 0 0 0 2px #6a6d73 inset; }
+  .screen { position: relative; width: 100%; height: 100%; border-radius: 54px; overflow: hidden; background: #000; }
+  .screen canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .punch { position: absolute; left: 50%; top: 32px; width: 32px; height: 32px; margin-left: -16px; border-radius: 50%;
+           background: radial-gradient(circle at 40% 40%, #2a3550, #000 60%); z-index: 3; }
+  .ui { position: absolute; inset: 0; z-index: 2; }
+  .clock { position: absolute; top: 210px; width: 100%; text-align: center; font-weight: 300; font-size: 150px; letter-spacing: -4px; }
+  .date { position: absolute; top: 400px; width: 100%; text-align: center; font-weight: 500; font-size: 34px; opacity: .85; }
+  .status { position: absolute; top: 32px; left: 56px; right: 56px; display: flex; justify-content: space-between; font-size: 26px; font-weight: 600; }
+  .back { transform: rotateY(180deg); box-shadow: 0 0 0 3px rgba(255,255,255,.22) inset; }
+  .back .gloss { position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.22) 45%, rgba(255,255,255,0) 60%); }
+  .lens { position: absolute; width: 124px; height: 124px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, #0a0d18 0 30%, #1b2338 31% 46%, #06070b 47% 62%, #3c3f47 63% 70%, #9aa0aa 71% 74%, #2c2f36 75%);
+    box-shadow: 0 6px 18px rgba(0,0,0,.6), 0 0 0 3px rgba(255,255,255,.08); }
+  .lens::after { content: ""; position: absolute; left: 34%; top: 30%; width: 14%; height: 14%; border-radius: 50%; background: rgba(160,190,255,.7); filter: blur(2px); }
+  .flash { position: absolute; width: 36px; height: 36px; border-radius: 50%; background: radial-gradient(circle, #fff6d8, #c9b98a 60%, #5d574a); }
+  .brand-back { position: absolute; bottom: 110px; width: 100%; text-align: center; font-size: 38px; font-weight: 600; letter-spacing: 6px; opacity: .5; }
+
+  /* ---------- 텍스트 ---------- */
+  .txt { position: absolute; left: 0; width: 100%; text-align: center; }
+  .h1 { font-weight: 800; font-size: 150px; letter-spacing: -3px; line-height: 1; }
+  .h2 { font-weight: 700; font-size: 92px; letter-spacing: -2px; line-height: 1.1; }
+  .sub { font-weight: 500; font-size: 46px; letter-spacing: -0.5px; opacity: .88; }
+  .grad { background: linear-gradient(90deg, #8fb8ff, #c8a6ff 50%, #ffb3e6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .gradG { background: linear-gradient(90deg, #6dffc4, #4fb4ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* 스탯 타일 */
+  .tiles { position: absolute; left: 60px; right: 60px; display: flex; gap: 22px; }
+  .tile { flex: 1; padding: 26px 10px 24px; border-radius: 34px; text-align: center;
+          background: rgba(255,255,255,.09); border: 2px solid rgba(255,255,255,.22); backdrop-filter: blur(14px); }
+  .tile .v { font-weight: 800; font-size: 54px; letter-spacing: -1px; line-height: 1.1; }
+  .tile .l { font-weight: 500; font-size: 28px; opacity: .8; margin-top: 8px; }
+
+  /* 카메라 스펙 목록 */
+  .camlist { position: absolute; left: 545px; top: 470px; width: 500px; }
+  .cam { margin-bottom: 30px; padding: 22px 30px; border-radius: 30px; background: rgba(255,255,255,.08); border: 2px solid rgba(255,255,255,.2); }
+  .cam .v { font-weight: 800; font-size: 64px; letter-spacing: -1px; line-height: 1; }
+  .cam .l { font-weight: 500; font-size: 32px; opacity: .85; margin-top: 8px; }
+
+  /* AI 칩 */
+  .chip { position: absolute; padding: 24px 40px; border-radius: 44px; background: rgba(255,255,255,.1);
+          border: 2px solid rgba(255,255,255,.28); backdrop-filter: blur(14px); white-space: nowrap; }
+  .chip .n { font-weight: 700; font-size: 46px; }
+  .chip .n b { color: #b9a2ff; margin-right: 10px; }
+  .chip .d { font-weight: 500; font-size: 30px; opacity: .8; margin-top: 4px; }
+
+  /* 성능 막대 */
+  .bars { position: absolute; left: 90px; right: 90px; top: 340px; }
+  .barRow { display: flex; align-items: center; margin-bottom: 34px; }
+  .barRow .k { width: 140px; font-weight: 700; font-size: 44px; }
+  .barRow .track { flex: 1; height: 34px; border-radius: 17px; background: rgba(255,255,255,.12); overflow: hidden; }
+  .barRow .fill { height: 100%; border-radius: 17px; background: linear-gradient(90deg, #4f8bff, #c86bff); box-shadow: 0 0 24px #8a6bff; }
+  .barRow .p { width: 170px; text-align: right; font-weight: 800; font-size: 50px; }
+
+  /* OS 7칸 */
+  .seven { position: absolute; left: 50%; top: 1060px; width: 868px; margin-left: -434px; display: flex; gap: 18px; }
+  .seven div { flex: 1; height: 104px; border-radius: 24px; display: flex; align-items: center; justify-content: center;
+               font-weight: 800; font-size: 46px; background: rgba(255,255,255,.08); border: 2px solid rgba(255,255,255,.2); }
+
+  #ring { position: absolute; left: 50%; top: 50%; width: 620px; height: 620px; margin: -310px 0 0 -310px; }
+  #battVal { position: absolute; top: 50%; width: 100%; text-align: center; margin-top: -75px; font-weight: 800; font-size: 118px; letter-spacing: -3px; }
+
+  #zoomNum { position: absolute; top: 290px; width: 100%; text-align: center; font-weight: 800; font-size: 170px; letter-spacing: -4px; color: #ffd76a; }
+
+  #foot { position: absolute; left: 60px; right: 60px; top: 1825px; text-align: center; font-weight: 500; font-size: 26px; color: rgba(255,255,255,.62); }
+  #flash { position: absolute; inset: 0; background: #fff; pointer-events: none; }
+  #vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.6) 100%); }
+  #fade { position: absolute; inset: 0; background: #000; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg" width="1080" height="1920"></canvas>
+
+  <div class="scene3d">
+    <div class="phone" id="phoneMain">
+      <div class="face front">
+        <div class="screen">
+          <canvas id="wall" width="496" height="1076"></canvas>
+          <div class="punch"></div>
+          <div class="ui" id="lockUI">
+            <div class="status"><span>9:41</span><span>5G ▮▮▮ 100%</span></div>
+            <div class="clock">9:41</div>
+            <div class="date">11월 7일 토요일</div>
+          </div>
+        </div>
+      </div>
+      <!-- 티타늄 그레이 -->
+      <div class="face back" style="background: linear-gradient(160deg,#9a9da3,#6b6e74 55%,#4d5055);">
+        <div class="gloss"></div>
+        <div class="lens" style="left:64px;top:60px"></div>
+        <div class="lens" style="left:64px;top:206px"></div>
+        <div class="lens" style="left:64px;top:352px"></div>
+        <div class="lens" style="left:210px;top:206px;transform:scale(.85)"></div>
+        <div class="flash" style="left:236px;top:104px"></div>
+        <div class="brand-back">Galaxy</div>
+      </div>
+    </div>
+    <!-- 티타늄 화이트실버 -->
+    <div class="phone" id="phoneL">
+      <div class="face front" style="background:#222"></div>
+      <div class="face back" style="background: linear-gradient(160deg,#f1f1ee,#cfd0cc 55%,#a9aaa6);">
+        <div class="gloss"></div>
+        <div class="lens" style="left:64px;top:60px"></div><div class="lens" style="left:64px;top:206px"></div><div class="lens" style="left:64px;top:352px"></div>
+        <div class="lens" style="left:210px;top:206px;transform:scale(.85)"></div>
+        <div class="flash" style="left:236px;top:104px"></div><div class="brand-back" style="color:#333">Galaxy</div>
+      </div>
+    </div>
+    <!-- 티타늄 젯블랙 -->
+    <div class="phone" id="phoneR">
+      <div class="face front" style="background:#222"></div>
+      <div class="face back" style="background: linear-gradient(160deg,#3a3b3f,#1f2023 55%,#121315);">
+        <div class="gloss"></div>
+        <div class="lens" style="left:64px;top:60px"></div><div class="lens" style="left:64px;top:206px"></div><div class="lens" style="left:64px;top:352px"></div>
+        <div class="lens" style="left:210px;top:206px;transform:scale(.85)"></div>
+        <div class="flash" style="left:236px;top:104px"></div><div class="brand-back">Galaxy</div>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="ring" width="620" height="620"></canvas>
+  <div id="battVal">5,000mAh</div>
+  <div id="zoomNum">1×</div>
+
+  <!-- S1 인트로 -->
+  <div class="txt sub" id="t_intro" style="top:880px; font-size:64px; font-weight:600;">새로운 차원이 열린다</div>
+  <!-- S2 리빌 -->
+  <div class="txt h1" id="t_name1" style="top:130px;">Galaxy</div>
+  <div class="txt h1 grad" id="t_name2" style="top:280px; font-size:120px;">S25 Ultra</div>
+  <!-- S3 디스플레이 -->
+  <div class="txt h2" id="t_disp" style="top:130px;">6.9형 QHD+</div>
+  <div class="txt sub" id="t_dispSub" style="top:250px;">다이내믹 AMOLED 2X 디스플레이</div>
+  <div class="tiles" id="tl_disp" style="top:1645px;">
+    <div class="tile"><div class="v">120Hz</div><div class="l">최대 주사율</div></div>
+    <div class="tile"><div class="v">2,600</div><div class="l">최대 밝기(nits)</div></div>
+    <div class="tile"><div class="v" style="font-size:40px;line-height:1.37">고릴라 아머 2</div><div class="l">코닝 강화 유리</div></div>
+  </div>
+  <!-- S4 200MP -->
+  <div class="txt h1 grad" id="t_200" style="top:1360px; font-size:200px;">200MP</div>
+  <div class="txt sub" id="t_200Sub" style="top:1580px; font-size:52px; font-weight:600;">2억 화소 광각 카메라</div>
+  <!-- S5 카메라 구성 -->
+  <div class="txt h2" id="t_cams" style="top:150px; font-size:84px;">프로급 카메라 시스템</div>
+  <div class="camlist" id="camlist">
+    <div class="cam"><div class="v">200MP</div><div class="l">광각</div></div>
+    <div class="cam"><div class="v">50MP</div><div class="l">초광각</div></div>
+    <div class="cam"><div class="v">50MP</div><div class="l">망원 · 광학 5배</div></div>
+    <div class="cam"><div class="v">10MP</div><div class="l">망원 · 광학 3배</div></div>
+    <div class="cam"><div class="v">12MP</div><div class="l">전면 카메라</div></div>
+  </div>
+  <!-- S6 줌 / 8K -->
+  <div class="txt h2" id="t_zoom" style="top:140px; font-size:80px;">최대 100배 줌</div>
+  <div class="txt h2 gradG" id="t_8k" style="top:1700px; font-size:80px;">8K 30fps 동영상</div>
+  <!-- S7 Galaxy AI -->
+  <div class="txt h1 grad" id="t_ai" style="top:250px; font-size:170px;">Galaxy AI</div>
+  <div class="chip" id="c1"><div class="n"><b>✦</b>Now Brief</div><div class="d">나에게 맞춘 하루 브리핑</div></div>
+  <div class="chip" id="c2"><div class="n"><b>✦</b>Audio Eraser</div><div class="d">영상 속 잡음 줄이기</div></div>
+  <div class="chip" id="c3"><div class="n"><b>✦</b>Gemini Live</div><div class="d">자연스러운 AI 대화</div></div>
+  <div class="chip" id="c4"><div class="n"><b>✦</b>ProScaler</div><div class="d">AI 화질 업스케일링</div></div>
+  <!-- S8 성능 -->
+  <div class="txt h2" id="t_chip" style="top:120px; font-size:76px;">Snapdragon® 8 Elite</div>
+  <div class="txt sub" id="t_chipSub" style="top:222px;">for Galaxy · 전작 대비 성능 향상</div>
+  <div class="bars" id="bars">
+    <div class="barRow"><div class="k">NPU</div><div class="track"><div class="fill"></div></div><div class="p">+40%</div></div>
+    <div class="barRow"><div class="k">CPU</div><div class="track"><div class="fill"></div></div><div class="p">+37%</div></div>
+    <div class="barRow"><div class="k">GPU</div><div class="track"><div class="fill"></div></div><div class="p">+30%</div></div>
+  </div>
+  <!-- S9 메모리 / OS -->
+  <div class="txt h1" id="t_ram" style="top:330px; font-size:170px;">12GB</div>
+  <div class="txt sub" id="t_ramSub" style="top:520px;">RAM으로 여유로운 멀티태스킹</div>
+  <div class="txt h1 grad" id="t_ui" style="top:800px; font-size:130px;">One UI 7</div>
+  <div class="seven" id="seven"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div></div>
+  <div class="txt sub" id="t_upd" style="top:1220px; font-weight:600;">7세대 OS 업그레이드</div>
+  <div class="txt sub" id="t_upd2" style="top:1295px; font-weight:600;">7년 보안 업데이트</div>
+  <!-- S10 배터리 -->
+  <div class="txt h2" id="t_batt" style="top:330px;">하루 종일 든든하게</div>
+  <div class="txt sub" id="t_battSub" style="top:1440px; font-weight:600;">동영상 재생 최대 31시간</div>
+  <div class="txt sub" id="t_battSub2" style="top:1515px;">45W 초고속 충전 2.0</div>
+  <!-- S11 디자인 -->
+  <div class="txt h2" id="t_ti" style="top:130px;">티타늄 프레임</div>
+  <div class="txt sub" id="t_tiSub" style="top:250px;">가볍고 단단하게</div>
+  <div class="tiles" id="tl_design" style="top:1660px;">
+    <div class="tile"><div class="v">8.2mm</div><div class="l">두께</div></div>
+    <div class="tile"><div class="v">218g</div><div class="l">무게</div></div>
+    <div class="tile"><div class="v">IP68</div><div class="l">방수·방진</div></div>
+  </div>
+  <!-- S12/S13 아웃트로 -->
+  <div class="txt h1" id="t_end1" style="top:1300px; font-size:160px;">Galaxy</div>
+  <div class="txt h1 grad" id="t_end2" style="top:1470px; font-size:118px;">S25 Ultra</div>
+  <div class="txt sub" id="t_colors" style="top:1660px; font-size:34px;">티타늄 화이트실버 · 티타늄 그레이 · 티타늄 젯블랙</div>
+  <div class="txt sub" id="t_cta" style="top:1650px; font-weight:600; font-size:54px;">지금 만나보세요</div>
+
+  <div id="foot"></div>
+  <div id="vignette"></div>
+  <div id="flash"></div>
+  <div id="fade"></div>
+</div>
+
+<script>
+// ===================================================================
+// render(t): 프레임 단위 결정적 렌더. 120 BPM (1박 0.5s, 1마디 2s) 음악과 동기.
+// 사양 수치: 삼성전자 공식 사이트(samsung.com) 기준.
+// ===================================================================
+const W = 1080, H = 1920, END = 50;
+const $ = id => document.getElementById(id);
+const bg = $('bg').getContext('2d');
+const wall = $('wall').getContext('2d');
+const ringC = $('ring').getContext('2d');
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, k) => a + (b - a) * k;
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const eOut = k => 1 - Math.pow(1 - k, 3);
+const eIn = k => k * k * k;
+const eIO = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const eBack = k => { const c = 1.7; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+function mulberry(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const rnd = mulberry(42);
+function win(t, a, b, c, d) { return Math.min(eOut(prog(t, a, b)), 1 - eIn(prog(t, c, d))); }
+function pulse(t, from, to, perBeat = 1) {
+  if (t < from || t > to) return 0;
+  const b = (t - from) * 2 * perBeat;
+  return Math.exp(-(b - Math.floor(b)) * 5);
+}
+
+// 요소 등장/퇴장 (투명도 + 위로 슬라이드 + 블러)
+function show(el, t, a, b, c, d, dy = 60, extra = '') {
+  const k = win(t, a, b, c, d);
+  el.style.opacity = k;
+  el.style.display = k <= 0.001 ? 'none' : '';
+  if (k <= 0.001) return 0;
+  const outK = prog(t, c, d);
+  const y = (1 - eOut(prog(t, a, b))) * dy - outK * dy * 0.6;
+  el.style.transform = `translateY(${y}px) scale(${1 + outK * 0.04}) ${extra}`;
+  el.style.filter = `blur(${(1 - k) * 12}px)`;
+  return k;
+}
+const setTxt = (id, t, a, b, c, d, dy) => show($(id), t, a, b, c, d, dy);
+// 자식 요소를 순차 등장
+function stagger(id, t, a, step, c, d, dy = 50) {
+  const box = $(id), kids = box.children;
+  const vis = t >= a && t <= d;
+  box.style.display = vis ? '' : 'none';
+  if (!vis) return;
+  for (let i = 0; i < kids.length; i++) show(kids[i], t, a + i * step, a + i * step + 0.5, c, d, dy);
+}
+
+// ---------- 배경 ----------
+const STARS = Array.from({ length: 700 }, () => ({ x: (rnd() - .5) * 2, y: (rnd() - .5) * 2, z: rnd(), s: rnd() * 1.6 + .4, tw: rnd() * 6.28 }));
+const DUST = Array.from({ length: 140 }, () => ({ a: rnd() * 6.28, r: rnd(), sp: rnd() * .6 + .2, s: rnd() * 3 + 1 }));
+const BUILD = Array.from({ length: 40 }, (_, i) => ({ w: 30 + rnd() * 60, h: 180 + rnd() * 520, x: i / 40, win: rnd() }));
+
+const THEMES = [
+  [0,  [2, 3, 10],  [4, 4, 16],  [60, 80, 255],  [140, 60, 255]],
+  [2,  [6, 8, 26],  [2, 2, 8],   [70, 110, 255], [170, 90, 255]],
+  [6,  [2, 8, 28],  [14, 4, 30], [0, 180, 255],  [255, 70, 170]],
+  [10, [4, 6, 16],  [10, 6, 22], [255, 150, 90], [120, 80, 255]],
+  [18, [2, 4, 14],  [8, 10, 30], [40, 120, 255], [255, 120, 200]],
+  [22, [18, 6, 46], [4, 8, 40],  [150, 90, 255], [60, 160, 255]],
+  [26, [2, 10, 30], [20, 4, 30], [80, 120, 255], [200, 80, 255]],
+  [30, [6, 6, 30],  [2, 10, 26], [90, 90, 255],  [60, 200, 255]],
+  [34, [2, 14, 18], [2, 4, 12],  [40, 255, 170], [60, 140, 255]],
+  [38, [10, 10, 14],[4, 4, 8],   [180, 180, 200],[120, 130, 160]],
+  [42, [8, 8, 24],  [2, 2, 6],   [120, 140, 255],[220, 160, 255]],
+];
+function theme(t) {
+  let i = 0; while (i < THEMES.length - 1 && t >= THEMES[i + 1][0]) i++;
+  const A = THEMES[i], B = THEMES[Math.min(i + 1, THEMES.length - 1)];
+  const k = A === B ? 0 : eIO(prog(t, B[0] - 0.6, B[0]));
+  const mix = (p, q) => p.map((v, j) => Math.round(lerp(v, q[j], k)));
+  return [mix(A[1], B[1]), mix(A[2], B[2]), mix(A[3], B[3]), mix(A[4], B[4])];
+}
+const rgb = (c, a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+const DROPS = [[22, 34], [42, 46]];
+const inDrop = t => DROPS.some(([a, b]) => t >= a && t < b);
+
+function drawBG(t) {
+  const [top, bot, n1, n2] = theme(t);
+  const g = bg.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, rgb(top)); g.addColorStop(1, rgb(bot));
+  bg.fillStyle = g; bg.fillRect(0, 0, W, H);
+
+  const beat = (inDrop(t) ? pulse(t, 0, END) * 0.25 : 0) + (t > 2 && t < 18 ? pulse(t, 2, 18, 0.5) * 0.08 : 0);
+  bg.globalCompositeOperation = 'lighter';
+  const blobs = [
+    [W * (.3 + .1 * Math.sin(t * .4)), H * (.35 + .05 * Math.cos(t * .3)), 700, n1, .35],
+    [W * (.75 + .08 * Math.cos(t * .35)), H * (.65 + .06 * Math.sin(t * .5)), 800, n2, .3],
+    [W * .5, H * (.5 + .1 * Math.sin(t * .2)), 500, n1, .18],
+  ];
+  for (const [x, y, r, c, a] of blobs) {
+    const rg = bg.createRadialGradient(x, y, 0, x, y, r * (1 + beat));
+    rg.addColorStop(0, rgb(c, a * (1 + beat))); rg.addColorStop(1, rgb(c, 0));
+    bg.fillStyle = rg; bg.fillRect(0, 0, W, H);
+  }
+
+  // 별 (인트로 워프, 빌드업 구간 가속)
+  let warp = 0.04;
+  if (t < 2.2) warp = lerp(0.05, 1.6, eIn(prog(t, 0, 2)));
+  else if (t > 21 && t < 22.1) warp = 1.2 * eIn(prog(t, 21, 22));
+  else if (t > 41 && t < 42.1) warp = 1.4 * eIn(prog(t, 41, 42));
+  for (const s of STARS) {
+    let z = (s.z - t * 0.04 - (t < 2.2 ? eIn(prog(t, 0, 2)) * 0.9 : 0)) % 1; if (z < 0) z += 1;
+    z = z * 0.95 + 0.05;
+    const px = W / 2 + s.x / z * 420, py = H / 2 + s.y / z * 420;
+    if (px < -50 || px > W + 50 || py < -50 || py > H + 50) continue;
+    const a = clamp((1 - z) * 1.3) * (0.6 + 0.4 * Math.sin(t * 3 + s.tw));
+    const len = warp * 60 / z;
+    bg.strokeStyle = `rgba(220,230,255,${a})`;
+    bg.lineWidth = s.s * (1.2 - z);
+    const dx = px - W / 2, dy = py - H / 2, d = Math.hypot(dx, dy) + 1e-3;
+    bg.beginPath(); bg.moveTo(px, py); bg.lineTo(px - dx / d * len - 0.5, py - dy / d * len - 0.5); bg.stroke();
+  }
+
+  for (const p of DUST) {
+    const ang = p.a + t * p.sp * 0.3, rr = 200 + p.r * 700;
+    bg.fillStyle = rgb(n2, 0.25 + 0.25 * Math.sin(t * 2 + p.a * 5));
+    bg.beginPath(); bg.arc(W / 2 + Math.cos(ang) * rr, H / 2 + Math.sin(ang) * rr * 1.5, p.s, 0, 6.28); bg.fill();
+  }
+
+  if (t < 3) {  // 인트로 광원
+    const k = eIn(prog(t, 0.2, 2)) * (1 - prog(t, 2, 3));
+    const rg = bg.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, 200 + 900 * k);
+    rg.addColorStop(0, `rgba(200,215,255,${0.9 * k})`); rg.addColorStop(.3, `rgba(110,130,255,${0.35 * k})`); rg.addColorStop(1, 'rgba(0,0,0,0)');
+    bg.fillStyle = rg; bg.fillRect(0, 0, W, H);
+    bg.fillStyle = `rgba(170,190,255,${0.5 * k})`;
+    bg.fillRect(0, H / 2 - 2 - 3 * k, W, 4 + 6 * k);
+  }
+
+  const ringK = Math.max(win(t, 0.3, 1.6, 2.0, 2.6), win(t, 42.2, 43.4, 51, 52));
+  if (ringK > 0) {  // 오빗 링
+    bg.save(); bg.translate(W / 2, t > 20 ? 1060 : H / 2); bg.rotate(-0.35 + t * 0.15); bg.scale(1, 0.28);
+    for (let i = 0; i < 3; i++) {
+      bg.strokeStyle = rgb(i % 2 ? n1 : n2, 0.55 * ringK); bg.lineWidth = 4 - i;
+      bg.beginPath(); bg.arc(0, 0, 330 + i * 70 + ringK * 40, 0, 6.28); bg.stroke();
+    }
+    bg.restore();
+  }
+
+  const sk = Math.max(win(t, 6, 6.4, 9.6, 10), win(t, 26, 26.4, 29.6, 30));
+  if (sk > 0) {  // 스피드 라인
+    for (let i = 0; i < 46; i++) {
+      const yy = (i * 97 + 13) % H, sp = 900 + (i * 53 % 700);
+      const xx = ((t * sp + i * 311) % (W + 600)) - 300;
+      const lg = bg.createLinearGradient(xx - 260, 0, xx, 0);
+      const c = i % 2 ? n1 : n2;
+      lg.addColorStop(0, rgb(c, 0)); lg.addColorStop(1, rgb(c, 0.5 * sk));
+      bg.fillStyle = lg; bg.fillRect(xx - 260, yy, 260, 3 + (i % 3));
+    }
+  }
+  bg.globalCompositeOperation = 'source-over';
+}
+
+// ---------- 폰 화면 ----------
+const ZOOMS = [1, 3, 5, 10, 30, 100];
+function zoomLevel(t) {  // 18.4s부터 박자(0.5s)마다 한 단계씩
+  return ZOOMS[clamp(Math.floor((t - 18.4) / 0.5), 0, ZOOMS.length - 1)];
+}
+function drawWall(t, mode) {
+  const w = 496, h = 1076;
+  if (mode === 'night') {
+    const zl = zoomLevel(t);
+    const z = 1 + Math.log10(zl) * 1.2 + eOut(prog(t, 18.4, 21.5)) * 0.15;
+    const bright = eOut(prog(t, 18.3, 19.6));
+    const sky = wall.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, `rgb(${lerp(3, 22, bright)},${lerp(4, 30, bright)},${lerp(12, 80, bright)})`);
+    sky.addColorStop(1, `rgb(${lerp(10, 120, bright)},${lerp(6, 60, bright)},${lerp(20, 110, bright)})`);
+    wall.fillStyle = sky; wall.fillRect(0, 0, w, h);
+    wall.save(); wall.translate(w * .7, 260); wall.scale(z, z); wall.translate(-w * .7, -260);
+    wall.fillStyle = `rgba(255,245,220,${0.5 + 0.5 * bright})`;
+    wall.beginPath(); wall.arc(w * .7, 260, 40, 0, 6.28); wall.fill();
+    wall.fillStyle = `rgba(200,190,170,${0.35 * bright})`;  // 달 표면 무늬
+    for (const [dx, dy, r] of [[-12, -8, 9], [10, 6, 6], [4, -16, 4], [-6, 14, 5]]) { wall.beginPath(); wall.arc(w * .7 + dx, 260 + dy, r, 0, 6.28); wall.fill(); }
+    for (const b of BUILD) {
+      const x = b.x * (w + 120) - 60, bh = b.h;
+      wall.fillStyle = `rgb(${lerp(5, 30, bright)},${lerp(6, 34, bright)},${lerp(14, 60, bright)})`;
+      wall.fillRect(x, h - bh, b.w, bh);
+      for (let yy = h - bh + 16; yy < h - 10; yy += 26) for (let xx = x + 8; xx < x + b.w - 8; xx += 16) {
+        if (((xx * 7 + yy * 13) | 0) % 5 < 2) continue;
+        wall.fillStyle = `rgba(255,${200 + ((xx | 0) % 50)},120,${(0.25 + 0.75 * bright) * (0.4 + b.win * 0.6)})`;
+        wall.fillRect(xx, yy, 7, 11);
+      }
+    }
+    wall.restore();
+    wall.strokeStyle = 'rgba(255,255,255,.75)'; wall.lineWidth = 3;
+    const fx = w * .7, fy = 260, fs = 80;
+    for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+      wall.beginPath(); wall.moveTo(fx + sx * fs, fy + sy * (fs - 24)); wall.lineTo(fx + sx * fs, fy + sy * fs); wall.lineTo(fx + sx * (fs - 24), fy + sy * fs); wall.stroke();
+    }
+    // 하단 줌 선택 UI
+    wall.fillStyle = 'rgba(0,0,0,.5)'; wall.beginPath(); wall.roundRect(28, h - 200, w - 56, 76, 38); wall.fill();
+    wall.font = '700 26px P'; wall.textAlign = 'center'; wall.textBaseline = 'middle';
+    ZOOMS.forEach((v, i) => {
+      const cx = 28 + (w - 56) * (i + .5) / ZOOMS.length, on = v === zl;
+      if (on) { wall.fillStyle = 'rgba(255,215,106,.25)'; wall.beginPath(); wall.arc(cx, h - 162, 32, 0, 6.28); wall.fill(); }
+      wall.fillStyle = on ? '#ffd76a' : 'rgba(255,255,255,.75)';
+      wall.fillText(v + '×', cx, h - 162);
+    });
+    return;
+  }
+  const speed = mode === 'vivid' ? 2.4 : 0.6, tt = t * speed;
+  wall.fillStyle = mode === 'vivid' ? '#0a0320' : '#070a1f'; wall.fillRect(0, 0, w, h);
+  wall.globalCompositeOperation = 'lighter';
+  const cols = mode === 'vivid'
+    ? [[255, 40, 140], [0, 200, 255], [255, 170, 0], [140, 60, 255]]
+    : [[70, 110, 255], [160, 80, 255], [40, 200, 255], [255, 120, 200]];
+  for (let i = 0; i < 4; i++) {
+    const x = w * (0.5 + 0.4 * Math.sin(tt * 0.7 + i * 1.7)), y = h * (0.5 + 0.38 * Math.cos(tt * 0.5 + i * 2.3));
+    const r = 420 + 80 * Math.sin(tt + i);
+    const gr = wall.createRadialGradient(x, y, 0, x, y, r);
+    gr.addColorStop(0, rgb(cols[i], 0.85)); gr.addColorStop(1, rgb(cols[i], 0));
+    wall.fillStyle = gr; wall.fillRect(0, 0, w, h);
+  }
+  wall.globalCompositeOperation = 'source-over';
+}
+
+// ---------- 배터리 링 (34~38s) ----------
+function drawRing(t) {
+  const el = $('ring'), val = $('battVal');
+  const vis = win(t, 34, 34.5, 37.6, 38);
+  el.style.opacity = val.style.opacity = vis;
+  el.style.display = val.style.display = vis <= 0 ? 'none' : 'block';
+  if (vis <= 0) return;
+  const k = eIO(prog(t, 34.3, 37));
+  ringC.clearRect(0, 0, 620, 620);
+  ringC.lineCap = 'round'; ringC.lineWidth = 34;
+  ringC.strokeStyle = 'rgba(255,255,255,.1)'; ringC.beginPath(); ringC.arc(310, 310, 250, 0, 6.28); ringC.stroke();
+  const g = ringC.createLinearGradient(0, 0, 620, 620);
+  g.addColorStop(0, '#3dffb0'); g.addColorStop(1, '#3d8bff');
+  ringC.strokeStyle = g; ringC.shadowColor = '#3dffc0'; ringC.shadowBlur = 40;
+  ringC.beginPath(); ringC.arc(310, 310, 250, -Math.PI / 2, -Math.PI / 2 + 6.283 * Math.max(0.001, k)); ringC.stroke();
+  ringC.shadowBlur = 0;
+  ringC.fillStyle = `rgba(160,255,220,${0.6 + 0.4 * pulse(t, 34, 38)})`;
+  ringC.beginPath(); ringC.moveTo(330, 440); ringC.lineTo(290, 515); ringC.lineTo(318, 515); ringC.lineTo(300, 570); ringC.lineTo(345, 490); ringC.lineTo(316, 490); ringC.closePath(); ringC.fill();
+  val.textContent = (Math.round(k * 50) * 100).toLocaleString('en-US') + 'mAh';
+  const s = 0.85 + 0.15 * eBack(prog(t, 34, 34.7));
+  el.style.transform = val.style.transform = `scale(${s})`;
+}
+
+function setPhone(el, { x = 0, y = 0, z = 0, rx = 0, ry = 0, rz = 0, s = 1, o = 1 }) {
+  el.style.opacity = o;
+  el.style.display = o <= 0.001 ? 'none' : 'block';
+  el.style.transform = `translate3d(${x}px,${y}px,${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;
+}
+
+// 장면별 출처/조건 각주
+const FOOT = [
+  [6, 10, '* 화면 크기는 모서리를 포함한 직사각형 기준'],
+  [18, 22, '* 광학 3배·5배, 그 외 배율은 디지털 줌'],
+  [26, 30, '* 전작 대비, 삼성전자 발표 수치'],
+  [30, 34, '* 업데이트 시기는 모델·통신사·국가별로 다를 수 있음'],
+  [34, 38, '* 배터리 일반 측정치 기준 (정격 4,855mAh) · 재생 시간은 사용 환경에 따라 다름'],
+  [38, 42, '* 무게는 국가·모델별로 다를 수 있음'],
+  [46, 51, '사양: 삼성전자 공식 사이트 기준 · 비공식 콘셉트 영상'],
+];
+
+// ===================================================================
+function render(t) {
+  drawBG(t);
+
+  // ---------------- 메인 폰 ----------------
+  const P = { x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0, s: 1, o: 0 };
+  let wallMode = 'calm';
+  if (t >= 2 && t < 6) {                       // S2 리빌
+    const k = eOut(prog(t, 2, 3.4));
+    P.o = prog(t, 2, 2.3);
+    P.y = lerp(900, 230, k); P.ry = lerp(-55, -8, k) + Math.sin(t * 1.2) * 4;
+    P.rx = lerp(25, 4, k); P.s = lerp(0.75, 0.9, k); P.rz = lerp(-8, 0, k);
+  } else if (t >= 6 && t < 10) {               // S3 디스플레이
+    const k = eIO(prog(t, 6, 6.8));
+    wallMode = 'vivid';
+    P.o = 1; P.y = lerp(230, 195, k); P.s = lerp(0.9, 0.85, k) + pulse(t, 6, 10, 0.5) * 0.01;
+    P.ry = lerp(-8, 0, k) + Math.sin(t * 1.4) * 6; P.rx = lerp(4, 2, k);
+  } else if (t >= 10 && t < 14) {              // S4 뒷면 → 카메라 클로즈업
+    const k = eIO(prog(t, 10, 11.3)), zk = eIO(prog(t, 11.2, 13.6));
+    P.o = 1; P.ry = lerp(0, 198, k) - zk * 10; P.rx = lerp(2, 6, k);
+    P.s = lerp(0.85, 1.1, k) + zk * 0.9;
+    P.x = lerp(0, -40, k) + zk * 330; P.y = lerp(195, -40, k) + zk * 520; P.rz = zk * -4;
+  } else if (t >= 14 && t < 18) {              // S5 카메라 구성 (폰 왼쪽)
+    const k = eIO(prog(t, 14, 14.9));
+    P.o = 1; P.ry = lerp(188, 192, k); P.rx = lerp(6, 2, k);
+    P.s = lerp(2.0, 0.82, k); P.x = lerp(330, -255, k); P.y = lerp(480, 140, k); P.rz = lerp(-4, 0, k);
+    if (t > 17.5) P.ry += eIO(prog(t, 17.5, 18)) * 60;
+  } else if (t >= 18 && t < 22) {              // S6 줌 (앞면, 야경)
+    const k = eIO(prog(t, 18, 18.6));
+    wallMode = 'night';
+    P.o = 1; P.ry = lerp(252, 360, k); P.rx = 0;
+    P.s = lerp(0.82, 0.95, k); P.x = lerp(-255, 0, k); P.y = lerp(140, 170, k);
+    if (t > 21.4) { const q = eIn(prog(t, 21.4, 22)); P.s += q * 1.6; P.o = 1 - q; }
+  } else if (t >= 22 && t < 26) {              // S7 Galaxy AI
+    const k = eOut(prog(t, 22, 22.8));
+    P.o = k; P.y = lerp(1100, 760, k); P.s = 0.7; P.rx = 18; P.ry = Math.sin(t * 1.5) * 10;
+    if (t > 25.5) P.o = 1 - prog(t, 25.5, 26);
+  } else if (t >= 26 && t < 30) {              // S8 성능
+    const k = eOut(prog(t, 26, 26.7));
+    wallMode = 'vivid';
+    P.o = k; P.s = lerp(0.5, 0.62, k) + pulse(t, 26, 30) * 0.015; P.y = 390;
+    P.rz = lerp(-30, -12, k) + eIO(prog(t, 28, 28.6)) * 24;
+    P.ry = lerp(40, 14, k) - eIO(prog(t, 28, 28.6)) * 28; P.rx = 10;
+    if (t > 29.6) P.o = 1 - prog(t, 29.6, 30);
+  } else if (t >= 38 && t < 42) {              // S11 디자인 (뒷면 회전)
+    const k = eOut(prog(t, 38, 38.8));
+    P.o = prog(t, 38, 38.3); P.s = lerp(0.6, 0.82, k); P.y = 170;
+    P.ry = lerp(140, 215, eIO(prog(t, 38, 41.4))); P.rx = 8; P.rz = lerp(-10, 4, eIO(prog(t, 38, 41.4)));
+    if (t > 41.4) { const q = eIn(prog(t, 41.4, 42)); P.s += q * 1.4; P.o = 1 - q; }
+  } else if (t >= 42) {                        // S12/13 라인업 가운데
+    const k = eOut(prog(t, 42, 43.2));
+    P.o = prog(t, 42, 42.3); P.ry = 180 + lerp(40, 0, k); P.s = lerp(0.5, 0.78, k); P.y = -180; P.z = 60;
+    P.rx = lerp(30, 0, k);
+  }
+  setPhone($('phoneMain'), P);
+  if (P.o > 0) drawWall(t, wallMode);
+  $('lockUI').style.opacity = wallMode === 'calm' ? 1 : 0;
+
+  const kL = eOut(prog(t, 42.25, 43.6)), lo = t >= 42 ? prog(t, 42.25, 42.6) : 0;
+  setPhone($('phoneL'), { o: lo, x: lerp(0, -330, kL), y: -150, z: -80, ry: 180 + lerp(40, 24, kL), rz: lerp(0, -6, kL), s: 0.7 });
+  setPhone($('phoneR'), { o: lo, x: lerp(0, 330, kL), y: -150, z: -80, ry: 180 + lerp(40, -24, kL), rz: lerp(0, 6, kL), s: 0.7 });
+
+  // ---------------- 텍스트 ----------------
+  setTxt('t_intro', t, 0.5, 1.3, 1.65, 1.95, 40);
+  $('t_intro').style.letterSpacing = lerp(30, 2, eOut(prog(t, 0.5, 1.9))) + 'px';
+
+  setTxt('t_name1', t, 2.5, 3.3, 5.5, 5.95, 80);
+  $('t_name1').style.letterSpacing = lerp(40, -3, eOut(prog(t, 2.5, 3.6))) + 'px';
+  setTxt('t_name2', t, 3.0, 3.7, 5.5, 5.95, 60);
+
+  setTxt('t_disp', t, 6.2, 6.9, 9.5, 9.95, 60);
+  setTxt('t_dispSub', t, 6.5, 7.2, 9.5, 9.95, 40);
+  stagger('tl_disp', t, 7.0, 0.5, 9.5, 9.95, 60);
+
+  setTxt('t_200', t, 11.0, 11.7, 13.5, 13.95, 70);
+  setTxt('t_200Sub', t, 11.5, 12.2, 13.5, 13.95, 40);
+
+  setTxt('t_cams', t, 14.4, 15.0, 17.5, 17.95, 50);
+  stagger('camlist', t, 14.8, 0.45, 17.5, 17.95, 50);
+
+  setTxt('t_zoom', t, 18.2, 18.8, 21.4, 21.9, 50);
+  const zn = $('zoomNum'), zk = show(zn, t, 18.4, 18.7, 21.4, 21.9, 0);
+  if (zk > 0) {
+    zn.textContent = zoomLevel(t) + '×';
+    const pb = pulse(t, 18.4, 21.4);
+    zn.style.transform = `scale(${1 + pb * 0.12})`;
+  }
+  setTxt('t_8k', t, 20.0, 20.6, 21.4, 21.9, 50);
+
+  // Galaxy AI (드롭)
+  setTxt('t_ai', t, 22.0, 22.5, 25.5, 25.95, 0);
+  $('t_ai').style.transform += ` scale(${1 + pulse(t, 22, 25.5) * 0.04 + (1 - eBack(prog(t, 22, 22.6))) * 0.4})`;
+  const chips = [['c1', 22.5, 70, 500, -1], ['c2', 23.0, 450, 690, 1], ['c3', 23.5, 70, 880, -1], ['c4', 24.0, 470, 1070, 1]];
+  for (const [id, st, x, y, dir] of chips) {
+    const el = $(id), k = win(t, st, st + 0.45, 25.4, 25.9);
+    el.style.display = k <= 0 ? 'none' : 'block';
+    el.style.opacity = k; el.style.left = x + 'px'; el.style.top = y + 'px';
+    const pop = eBack(prog(t, st, st + 0.45));
+    el.style.transform = `translateX(${(1 - pop) * dir * 160}px) scale(${0.6 + 0.4 * pop + pulse(t, st + 0.5, 25.4) * 0.03}) translateY(${Math.sin(t * 2 + st) * 8}px)`;
+  }
+
+  // 성능
+  setTxt('t_chip', t, 26.2, 26.8, 29.5, 29.95, 50);
+  setTxt('t_chipSub', t, 26.5, 27.1, 29.5, 29.95, 40);
+  stagger('bars', t, 26.8, 0.35, 29.5, 29.95, 30);
+  [40, 37, 30].forEach((v, i) => {
+    $('bars').children[i].querySelector('.fill').style.width = (eOut(prog(t, 26.9 + i * 0.35, 28.2 + i * 0.35)) * v / 40 * 100) + '%';
+  });
+
+  // 메모리 / OS
+  setTxt('t_ram', t, 30.1, 30.7, 33.5, 33.95, 60);
+  setTxt('t_ramSub', t, 30.4, 31.0, 33.5, 33.95, 40);
+  setTxt('t_ui', t, 31.0, 31.6, 33.5, 33.95, 50);
+  stagger('seven', t, 31.4, 0.18, 33.5, 33.95, 40);
+  [...$('seven').children].forEach((d, i) => {
+    const on = t >= 31.4 + i * 0.18 + 0.2;
+    d.style.background = on ? 'linear-gradient(135deg,#6a8bff,#b46bff)' : 'rgba(255,255,255,.08)';
+    d.style.boxShadow = on ? '0 0 26px rgba(150,110,255,.7)' : 'none';
+  });
+  setTxt('t_upd', t, 32.4, 32.9, 33.5, 33.95, 30);
+  setTxt('t_upd2', t, 32.6, 33.1, 33.5, 33.95, 30);
+
+  // 배터리
+  setTxt('t_batt', t, 34.2, 34.8, 37.6, 37.95, 60);
+  setTxt('t_battSub', t, 34.8, 35.4, 37.6, 37.95, 40);
+  setTxt('t_battSub2', t, 35.3, 35.9, 37.6, 37.95, 40);
+  drawRing(t);
+
+  // 디자인
+  setTxt('t_ti', t, 38.2, 38.8, 41.4, 41.9, 60);
+  setTxt('t_tiSub', t, 38.5, 39.1, 41.4, 41.9, 40);
+  stagger('tl_design', t, 39.0, 0.4, 41.4, 41.9, 60);
+
+  // 아웃트로
+  setTxt('t_end1', t, 42.6, 43.5, 51, 52, 60);
+  $('t_end1').style.letterSpacing = lerp(50, -2, eOut(prog(t, 42.6, 44))) + 'px';
+  setTxt('t_end2', t, 43.2, 44.0, 51, 52, 50);
+  setTxt('t_colors', t, 44.0, 44.6, 45.6, 45.95, 30);
+  setTxt('t_cta', t, 46.2, 46.9, 51, 52, 40);
+
+  // 각주
+  const foot = $('foot'), f = FOOT.find(([a, b]) => t >= a && t < b);
+  if (f) { foot.textContent = f[2]; foot.style.opacity = win(t, f[0] + 0.5, f[0] + 1, f[1] - 0.4, f[1]); }
+  else foot.style.opacity = 0;
+
+  // 플래시 / 페이드
+  let fl = 0;
+  for (const [ft, a] of [[2, .9], [22, .75], [42, 1], [46, .35]])
+    if (t >= ft - 0.08) fl = Math.max(fl, a * (t < ft ? prog(t, ft - 0.08, ft) : Math.exp(-(t - ft) * 7)));
+  if (t < 2.0) fl = Math.max(fl, prog(t, 1.85, 2.0) * 0.9);
+  $('flash').style.opacity = fl;
+  $('fade').style.opacity = Math.max(1 - prog(t, 0, 0.4), prog(t, END - 0.9, END));
+}
+
+window.render = render;
+window.ready = document.fonts.ready.then(() => Promise.all(['300', '500', '600', '700', '800'].map(w => document.fonts.load(`${w} 50px P`)))).then(() => true);
+render(0);
+</script>
+</body>
+</html>
