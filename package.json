@@ -1,0 +1,11 @@
+{
+  "name": "tetris-palace",
+  "private": true,
+  "description": "Single-file browser block puzzle game with automated smoke tests",
+  "scripts": {
+    "test": "node --test tests/smoke.test.js"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}
