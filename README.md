@@ -1,13 +1,15 @@
 # zis7676
 
-브라우저에서 바로 실행되는 단일 HTML 블록 퍼즐 게임입니다. 빌드 과정이 없으며 HTML 파일을 열면 실행됩니다.
+브라우저에서 바로 실행되는 블록 퍼즐 게임입니다. 빌드 과정이 없으며 `index.html`을 열면 실행됩니다.
 
 ## 파일
 
 | 파일 | 설명 |
 |---|---|
-| `index.html` | 가장 나중에 올라온 버전 |
-| `tetris_palace_v13_audio_ui_fix.html` | v13 버전. 어느 쪽을 정식으로 할지는 아직 정하지 않았습니다 |
+| `index.html` | 게임 화면 마크업. 가장 나중에 올라온 버전을 분리한 것 |
+| `css/style.css` | `index.html`의 스타일 |
+| `js/game.js` | `index.html`의 게임 로직 |
+| `tetris_palace_v13_audio_ui_fix.html` | v13 버전(단일 파일 그대로). 어느 쪽을 정식으로 할지는 아직 정하지 않았습니다 |
 | `tests/smoke.test.js` | 두 HTML 파일 모두에 대해 실행되는 브라우저 테스트 |
 | `.github/workflows/test.yml` | 푸시·PR마다 테스트를 실행하는 CI |
 
